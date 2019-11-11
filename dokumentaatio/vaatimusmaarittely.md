@@ -9,7 +9,7 @@ Kun kaikki palikat on tuhottu, pelaaja siirtyy seuraavalle tasolle. Jos pallo os
 
 - yllä kuvatun mukainen peli
 	- maila, jota pelaaja ohjaa vasemmalle ja oikealle
-	- pallo, joka kimpolee mailasta, seinistä ja palikoista
+	- pallo, joka kimpoilee mailasta, seinistä ja palikoista
 	- palikat, jotka tuhoutuvat, kun pallo osuu niihin
 
 - satunnaisesti generoitavat tasot
@@ -39,7 +39,7 @@ Lisätoiminnallisuudet suurinpiirtein todennäköisimmästä epätodennäköisim
 	- liikkuvia
 	
 - monimutkaisempi tasojen generointi
-	- erikoistasoja esim. "bossfight"
+	- erikoistasoja esim. "boss fight"
 
 - 2 pelaajaa
 
