@@ -1,5 +1,7 @@
-# Ohjelmistotekniikka, harjoitustyö
-## Tehtävät
-### Viikko 1
-[gitlog.txt](https://github.com/JakeKallioniemi/ot-harjoitustyo/blob/master/laskarit/viikko1/gitlog.txt)  
-[komentorivi.txt](https://github.com/JakeKallioniemi/ot-harjoitustyo/blob/master/laskarit/viikko1/komentorivi.txt)
+# BrickBreaker-peli
+
+Yksinkertainen Arkanoid-tyylinen peli satunnaisesti generoitavilla tasoilla.
+
+## Dokumentaatio
+[Vaatimusmäärittely](https://github.com/JakeKallioniemi/ot-harjoitustyo/blob/master/dokumentaatio/vaatimusmaarittely.md)
+[Työaikakirjanpito](https://github.com/JakeKallioniemi/ot-harjoitustyo/blob/master/dokumentaatio/tyoaikakirjanpito.md)
