@@ -25,6 +25,24 @@ public class Paddle implements Entity {
         }
     }
 
+    public double getWidth() {
+        return shape.getWidth();
+    }
+
+    public double getHeight() {
+        return shape.getHeight();
+    }
+
+    @Override
+    public double getX() {
+        return shape.getTranslateX();
+    }
+
+    @Override
+    public double getY() {
+        return shape.getTranslateY();
+    }
+
     @Override
     public Shape getShape() {
         return shape;

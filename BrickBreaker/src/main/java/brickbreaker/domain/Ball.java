@@ -35,22 +35,36 @@ public class Ball implements Entity {
     public void stop() {
         movement = Point2D.ZERO;
     }
-    
+
     public void setPosition(double x, double y) {
         shape.setTranslateX(x);
         shape.setTranslateY(y);
     }
-    
+
     public boolean inPlay() {
-        return shape.getTranslateY() - shape.getRadius() > GAME_HEIGHT;
+        return shape.getTranslateY() - shape.getRadius() < GAME_HEIGHT;
     }
-    
+
     public Point2D getMovement() {
         return movement;
     }
 
     public void setMovement(Point2D movement) {
         this.movement = movement;
+    }
+
+    public double getRadius() {
+        return shape.getRadius();
+    }
+    
+    @Override
+    public double getX() {
+        return shape.getTranslateX();
+    }
+
+    @Override
+    public double getY() {
+        return shape.getTranslateY();
     }
 
     @Override
