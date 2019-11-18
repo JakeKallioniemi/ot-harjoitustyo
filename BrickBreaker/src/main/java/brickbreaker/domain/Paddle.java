@@ -15,8 +15,8 @@ public class Paddle implements Entity {
         shape.setTranslateY(GAME_HEIGHT - height - 10);
     }
 
-    public void move(double dx) {
-        shape.setTranslateX(shape.getTranslateX() + dx);
+    public void move(double dx, double dt) {
+        shape.setTranslateX(shape.getTranslateX() + dx * dt);
 
         if (shape.getTranslateX() < 0) {
             shape.setTranslateX(0);

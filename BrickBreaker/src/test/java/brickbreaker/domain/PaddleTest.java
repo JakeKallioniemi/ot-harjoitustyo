@@ -21,19 +21,25 @@ public class PaddleTest {
 
     @Test
     public void moveMovesPaddleByGivenAmount() {
-        paddle.move(100.5);
+        paddle.move(100.5, 1);
         assertEquals(645.5, paddle.getX(), 0.01);
     }
 
     @Test
+    public void deltaTimeChangesMovedDistance() {
+        paddle.move(100, 0.5);
+        assertEquals(595, paddle.getX(), 0.01);
+    }
+
+    @Test
     public void moveStaysInBoundsLeftSide() {
-        paddle.move(-1000);
+        paddle.move(-1000, 1);
         assertEquals(0, paddle.getX(), 0.01);
     }
 
     @Test
     public void moveStaysInBoundsRightSide() {
-        paddle.move(1000);
+        paddle.move(1000, 1);
         assertEquals(1090, paddle.getX(), 0.01);
     }
 }

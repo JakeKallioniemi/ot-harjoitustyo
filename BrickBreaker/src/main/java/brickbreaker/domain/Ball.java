@@ -18,9 +18,9 @@ public class Ball implements Entity {
         movement = Point2D.ZERO;
     }
 
-    public void move() {
-        shape.setTranslateX(shape.getTranslateX() + movement.getX());
-        shape.setTranslateY(shape.getTranslateY() + movement.getY());
+    public void move(double dt) {
+        shape.setTranslateX(shape.getTranslateX() + movement.getX() * dt);
+        shape.setTranslateY(shape.getTranslateY() + movement.getY() * dt);
 
         if (shape.getTranslateX() - shape.getRadius() < 0
                 || shape.getTranslateX() + shape.getRadius() > GAME_WIDTH) {

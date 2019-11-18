@@ -60,9 +60,8 @@ public class BrickBreaker extends Application {
             root.getChildren().add(shape);
         });
 
-        double dxStart = ThreadLocalRandom.current().nextDouble(-3, 3);
-
-        ball.setMovement(new Point2D(dxStart, -3));
+        double dxStart = ThreadLocalRandom.current().nextDouble(-300, 300);
+        ball.setMovement(new Point2D(dxStart, -300));
 
         Scene scene = new Scene(root, GAME_WIDTH, GAME_HEIGHT, Color.DARKGRAY);
 
@@ -75,18 +74,23 @@ public class BrickBreaker extends Application {
         scene.setOnKeyReleased(event -> {
             keysPressed.remove(event.getCode());
         });
-
+        
         new AnimationTimer() {
+            
+        long prevTime = System.nanoTime();
 
             @Override
             public void handle(long currentTime) {
+                double dt = (currentTime - prevTime) / 1000000000.0;
+                prevTime = currentTime;
+                
                 if (keysPressed.contains(KeyCode.LEFT)) {
-                    paddle.move(-10);
+                    paddle.move(-600, dt);
                 }
                 if (keysPressed.contains(KeyCode.RIGHT)) {
-                    paddle.move(10);
+                    paddle.move(600, dt);
                 }
-                ball.move();
+                ball.move(dt);
 
                 if (ball.intersects(paddle) && ball.getMovement().getY() > 0) {
                     Point2D movement = ball.getMovement();
@@ -119,7 +123,15 @@ public class BrickBreaker extends Application {
                 toBeRemoved.forEach(brick -> {
                     root.getChildren().remove(brick.getShape());
                 });
-                
+
+                if (!ball.inPlay()) {
+                    ball.setPosition(
+                            paddle.getX() + paddle.getWidth() / 2,
+                            paddle.getY() - ball.getRadius()
+                    );
+                    double dxStart = ThreadLocalRandom.current().nextDouble(-300, 300);
+                    ball.setMovement(new Point2D(dxStart, -300));
+                }
             }
         }.start();
 
