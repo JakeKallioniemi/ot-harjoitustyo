@@ -1,0 +1,43 @@
+[Peli]1-1[Pelilauta], [Peli]1-2[Noppa], [Peli]1-2..8[Pelaaja], [Pelilauta]1-40[Ruutu], [Ruutu]1-1[Ruutu], [Pelaaja]1-1[Pelinappula], [Pelinappula]-.->[Ruutu]
+
+[Peli]1-1[Pelilauta], [Peli]1-2[Noppa], [Peli]1-2..8[Pelaaja|rahaa], [Pelilauta]1-40[Ruutu], [Ruutu]1-1[Ruutu], [Pelaaja]1-1[Pelinappula], [Pelinappula]-.->[Ruutu],
+[Ruutu]^-[Aloitus], [Ruutu]^-[Vankila], [Ruutu]^-[Sattuma], [Ruutu]^-[Yhteismaa], [Ruutu]^-[Asema], [Ruutu]^-[Laitos], [Ruutu]^-[Katu|nimi], [Peli]1-1[Vankila], 
+[Peli]1-1[Aloitus],[Toiminto]1-1[Ruutu], [Toiminto]1-1[Kortti], [Kortti]<-.-[Sattuma], [Kortti]<-.-[Yhteismaa], [Talo]0..4-1[Katu], [Hotelli]0..1-1[Katu], [Katu]<->[Pelaaja]
+
+main->*+machine: new Machine()
+machine->*tank: new FuelTank()
+machine->tank: fill(40)
+machine->*-engine: new Engine(tank)
+main->+machine: drive()
+machine->+engine: start()
+engine->-tank: consume(5)
+machine->+engine: isRunning()
+engine->+tank: contentsLeft()
+tank-->-engine: 35
+engine-->-machine: true
+machine->+engine: useEnergy()
+deactivate machine
+engine->-tank: consume(10)
+
+main->*laitehallinto: new HKLLaitehallinto()
+main->*rautatietori: new Lataajalaite()
+main->*ratikka6: new Lukijalaite()
+main->*bussi244: new Lukijalaite()
+main->laitehallinto: lisaaLataaja(rautatietori)
+main->laitehallinto: lisaaLukija(ratikka6)
+main->laitehallinto: lisaaLukija(bussi244)
+main->*lippuluukku: new Kioski()
+main->+lippuluukku: ostaMatkakortti("Arto")
+lippuluukku->*artonKortti: new Matkakortti("Arto")
+lippuluukku-->-main: artonKortti
+main->+rautatietori: lataaArvoa(artonKortti, 3)
+rautatietori->-artonKortti: kasvataArvoa(3)
+main->+ratikka6: ostaLippu(artonKortti, 0)
+ratikka6->+artonKortti: getArvo()
+artonKortti-->-ratikka6: 3.0
+ratikka6->artonKortti: vahennaArvoa(1.5)
+ratikka6-->-main: true
+main->+bussi244: ostaLippu(artonKortti, 2)
+bussi244->+artonKortti: getArvo()
+artonKortti-->-bussi244: 1.5
+bussi244-->-main: false
