@@ -8,9 +8,9 @@ Kun kaikki palikat on tuhottu, pelaaja siirtyy seuraavalle tasolle. Jos pallo os
 ## Perusversion tarjoama toiminnallisuus
 
 - yllä kuvatun mukainen peli
-	- maila, jota pelaaja ohjaa vasemmalle ja oikealle
-	- pallo, joka kimpoilee mailasta, seinistä ja palikoista
-	- palikat, jotka tuhoutuvat, kun pallo osuu niihin
+	- maila, jota pelaaja ohjaa vasemmalle ja oikealle **tehty**
+	- pallo, joka kimpoilee mailasta, seinistä ja palikoista **tehty**
+	- palikat, jotka tuhoutuvat, kun pallo osuu niihin **tehty**
 
 - satunnaisesti generoitavat tasot
 
@@ -21,7 +21,7 @@ Kun kaikki palikat on tuhottu, pelaaja siirtyy seuraavalle tasolle. Jos pallo os
 - highscore-systeemi
 	- tallennetaan ja luetaan tiedostosta
 
-- valikko, josta pääsee pelaamaan tai tarkastelemaan highscoreja (tai poistumaan pelistä).
+- valikko, josta pääsee pelaamaan tai tarkastelemaan highscoreja (tai poistumaan pelistä). **tehty (osittain)**
 
 ## Jatkokehitysideoita
 
