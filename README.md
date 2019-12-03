@@ -16,6 +16,8 @@ Yksinkertainen Arkanoid-tyylinen peli satunnaisesti generoitavilla tasoilla.
 
 ## Komentorivitoiminnot
 
+**HUOM!** Kaikki listatut komennot tulee suorittaa BrickBreaker-kansion sisällä eikä juuri kansiossa.
+
 ### Ohjelman käynnistys
 
 Ohjelma suoritetaan komennolla
