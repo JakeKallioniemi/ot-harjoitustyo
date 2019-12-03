@@ -14,14 +14,14 @@ Kun kaikki palikat on tuhottu, pelaaja siirtyy seuraavalle tasolle. Jos pallo os
 
 - satunnaisesti generoitavat tasot
 
-- pisteet
-	- eriväriset palikat antavat erimäärän pisteitä
-	- näytetään kokoajan yläkulmassa
+- pisteet \[**tehty (uusi!)**\]
+	- eriväriset palikat antavat erimäärän pisteitä \[**tehty (uusi!)**\]
+	- näytetään kokoajan yläkulmassa \[**tehty (uusi!)**\]
 
-- highscore-systeemi
-	- tallennetaan ja luetaan tiedostosta
+- highscore-systeemi \[**tehty (uusi!)**\]
+	- tallennetaan ja luetaan tiedostosta \[**tehty (uusi!)**\]
 
-- valikko, josta pääsee pelaamaan tai tarkastelemaan highscoreja (tai poistumaan pelistä). \[**tehty (osittain)**\]
+- valikko, josta pääsee pelaamaan tai tarkastelemaan highscoreja (tai poistumaan pelistä). \[**tehty (scores uutena)**\]
 
 ## Jatkokehitysideoita
 
