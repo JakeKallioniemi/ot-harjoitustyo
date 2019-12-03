@@ -2,7 +2,7 @@
 
 ## Ohjelman käynnistäminen
 
-Ohjelma käynnistetään komennolla
+Ohjelma voidaan käynnistää esim. komennolla
 
 ```
 mvn compile exec:java -Dexec.mainClass=brickbreaker.BrickBreaker
@@ -10,7 +10,8 @@ mvn compile exec:java -Dexec.mainClass=brickbreaker.BrickBreaker
 
 ## Käyttäminen
 
-Valikossa liikutaan nuolinäppäimillä ylös ja alas.  
+Valikoissa liikutaan nuolinäppäimillä.
 Valinta tehdään painamalla enteriä.  
 
-Pelissä mailaa liikutetaan nuolinäppäimillä vasemmalle ja oikealla.
+Pelissä mailaa liikutetaan nuolinäppäimillä vasemmalle ja oikealla.  
+Esc poistuu pelistä valikkoon.
