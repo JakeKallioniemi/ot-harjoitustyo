@@ -1,12 +1,18 @@
 # BrickBreaker-peli
 
-Yksinkertainen Arkanoid-tyylinen peli satunnaisesti generoitavilla tasoilla.
+Yksinkertainen Arkanoid-tyylinen peli satunnaisesti generoitavilla tasoilla.  
+  
+**HUOM!** Peli on vielä aika buginen ja pallo voi esimerkiksi pomppia oudosti tai jäädä seiniin kiinni varsinkin jos fps on alhainen.
 
 ## Dokumentaatio
+[Käyttöohje](https://github.com/JakeKallioniemi/ot-harjoitustyo/blob/master/dokumentaatio/kayttoohje.md)  
 [Vaatimusmäärittely](https://github.com/JakeKallioniemi/ot-harjoitustyo/blob/master/dokumentaatio/vaatimusmaarittely.md)  
 [Työaikakirjanpito](https://github.com/JakeKallioniemi/ot-harjoitustyo/blob/master/dokumentaatio/tyoaikakirjanpito.md)  
 [Arkkitehtuurikuvaus](https://github.com/JakeKallioniemi/ot-harjoitustyo/blob/master/dokumentaatio/arkkitehtuuri.md)  
-[Käyttöohje](https://github.com/JakeKallioniemi/ot-harjoitustyo/blob/master/dokumentaatio/kayttoohje.md)
+
+## Releaset
+
+[Viikko 5](https://github.com/JakeKallioniemi/ot-harjoitustyo/releases/tag/viikko5)
 
 ## Komentorivitoiminnot
 
@@ -17,6 +23,16 @@ Ohjelma suoritetaan komennolla
 ```
 mvn compile exec:java -Dexec.mainClass=brickbreaker.BrickBreaker
 ```
+### Suoritettavan jarin generointi
+
+Komento
+
+```
+mvn package
+```
+
+generoi hakemistoon _target_ suoritettavan jar-tiedoston _BrickBreaker-1.0-SNAPSHOT.jar_
+
 ### Testaus
 
 Testit suoritetaan komennolla
