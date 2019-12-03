@@ -2,11 +2,24 @@ package brickbreaker.domain;
 
 import javafx.scene.shape.Shape;
 
-// maybe use inheritance instead?
-public interface Entity {
+public abstract class Entity {
 
-    public double getX();
-    public double getY();  
-    public Shape getShape();
-    public boolean intersects(Entity other);
+    protected Shape shape;
+    
+    public double getX() {
+        return shape.getTranslateX();
+    }
+    public double getY() {
+        return shape.getTranslateY();
+    }  
+    
+    public Shape getShape() {
+        return shape;
+    }
+    
+    public boolean intersects(Entity other) {
+        Shape intersection = Shape.intersect(this.getShape(), other.getShape());
+        return intersection.getBoundsInLocal().getWidth() != -1;
+    }
+    
 }

@@ -1,12 +1,10 @@
 package brickbreaker.domain;
 
 import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.Shape;
 
-public class Brick implements Entity {
+public class Brick extends Entity {
 
     private int type;
-    private Rectangle shape;
 
     public Brick(double x, double y, double width, double height, int type) {
         shape = new Rectangle(width, height);
@@ -20,32 +18,13 @@ public class Brick implements Entity {
     }
 
     public double getWidth() {
-        return shape.getWidth();
+        Rectangle rect = (Rectangle) shape;
+        return rect.getWidth();
     }
     
     public double getHeight() {
-        return shape.getHeight();
-    }
-    
-    @Override
-    public double getX() {
-        return shape.getTranslateX();
-    }
-
-    @Override
-    public double getY() {
-        return shape.getTranslateY();
-    }
-
-    @Override
-    public Shape getShape() {
-        return shape;
-    }
-
-    @Override
-    public boolean intersects(Entity other) {
-        Shape intersection = Shape.intersect(this.getShape(), other.getShape());
-        return intersection.getBoundsInLocal().getWidth() != -1;
+        Rectangle rect = (Rectangle) shape;
+        return rect.getHeight();
     }
 
 }

@@ -4,11 +4,9 @@ import static brickbreaker.BrickBreaker.GAME_HEIGHT;
 import static brickbreaker.BrickBreaker.GAME_WIDTH;
 import javafx.geometry.Point2D;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Shape;
 
-public class Ball implements Entity {
+public class Ball extends Entity {
 
-    private Circle shape;
     private Point2D movement;
 
     public Ball(double radius) {
@@ -22,12 +20,12 @@ public class Ball implements Entity {
         shape.setTranslateX(shape.getTranslateX() + movement.getX() * dt);
         shape.setTranslateY(shape.getTranslateY() + movement.getY() * dt);
 
-        if (shape.getTranslateX() - shape.getRadius() < 0
-                || shape.getTranslateX() + shape.getRadius() > GAME_WIDTH) {
+        if (shape.getTranslateX() - getRadius() < 0
+                || shape.getTranslateX() + getRadius() > GAME_WIDTH) {
             movement = new Point2D(-movement.getX(), movement.getY());
         }
 
-        if (shape.getTranslateY() - shape.getRadius() < 0) {
+        if (shape.getTranslateY() - getRadius() < 0) {
             movement = new Point2D(movement.getX(), -movement.getY());
         }
     }
@@ -42,7 +40,7 @@ public class Ball implements Entity {
     }
 
     public boolean inPlay() {
-        return shape.getTranslateY() - shape.getRadius() < GAME_HEIGHT;
+        return shape.getTranslateY() - getRadius() < GAME_HEIGHT;
     }
 
     public Point2D getMovement() {
@@ -54,27 +52,8 @@ public class Ball implements Entity {
     }
 
     public double getRadius() {
-        return shape.getRadius();
+        Circle circ = (Circle) shape;
+        return circ.getRadius();
     }
     
-    @Override
-    public double getX() {
-        return shape.getTranslateX();
-    }
-
-    @Override
-    public double getY() {
-        return shape.getTranslateY();
-    }
-
-    @Override
-    public Shape getShape() {
-        return shape;
-    }
-
-    @Override
-    public boolean intersects(Entity other) {
-        Shape intersection = Shape.intersect(this.getShape(), other.getShape());
-        return intersection.getBoundsInLocal().getWidth() != -1;
-    }
 }

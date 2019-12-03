@@ -3,11 +3,8 @@ package brickbreaker.domain;
 import static brickbreaker.BrickBreaker.GAME_HEIGHT;
 import static brickbreaker.BrickBreaker.GAME_WIDTH;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.Shape;
 
-public class Paddle implements Entity {
-
-    private Rectangle shape;
+public class Paddle extends Entity {
 
     public Paddle(double width, double height) {
         shape = new Rectangle(width, height);
@@ -20,43 +17,24 @@ public class Paddle implements Entity {
 
         if (shape.getTranslateX() < 0) {
             shape.setTranslateX(0);
-        } else if (shape.getTranslateX() + shape.getWidth() > GAME_WIDTH) {
-            shape.setTranslateX(GAME_WIDTH - shape.getWidth());
+        } else if (shape.getTranslateX() + getWidth() > GAME_WIDTH) {
+            shape.setTranslateX(GAME_WIDTH - getWidth());
         }
     }
 
     public double getWidth() {
-        return shape.getWidth();
+        Rectangle rect = (Rectangle) shape;
+        return rect.getWidth();
     }
 
     public double getHeight() {
-        return shape.getHeight();
+        Rectangle rect = (Rectangle) shape;
+        return rect.getHeight();
     }
 
     public void reset() {
         shape.setTranslateX(GAME_WIDTH / 2 - getWidth() / 2);
         shape.setTranslateY(GAME_HEIGHT - getHeight() - 10);
     }
-
-    @Override
-    public double getX() {
-        return shape.getTranslateX();
-    }
-
-    @Override
-    public double getY() {
-        return shape.getTranslateY();
-    }
-
-    @Override
-    public Shape getShape() {
-        return shape;
-    }
-
-    @Override
-    public boolean intersects(Entity other) {
-        Shape intersection = Shape.intersect(this.getShape(), other.getShape());
-        return intersection.getBoundsInLocal().getWidth() != -1;
-    }
-
+    
 }
