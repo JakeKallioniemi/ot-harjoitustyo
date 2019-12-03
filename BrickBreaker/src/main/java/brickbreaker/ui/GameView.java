@@ -124,7 +124,7 @@ public class GameView implements View {
                 }
                 lives.setValue("Lives: " + game.getLives());
 
-                if (game.gameOver()) {
+                if (game.isOver()) {
                     gameLoop.stop();
                     List<Object> args = new ArrayList<>();
                     args.add(game.getScore());

@@ -17,6 +17,9 @@ public class HighScoreService {
         this.scoreCount = scoreCount;
         try {
             scores = scoreDao.list();
+            if (scores.isEmpty()) {
+                initScores();
+            }
         } catch (IOException ex) {
             initScores();
         }
@@ -37,6 +40,7 @@ public class HighScoreService {
         try {
             scoreDao.add(scores);
         } catch (IOException ex) {
+            // just printing for now
             ex.printStackTrace();
         }
     }
@@ -51,6 +55,7 @@ public class HighScoreService {
         try {
             scoreDao.add(placeholderScores);
         } catch (IOException ex) {
+            // just printing for now
             ex.printStackTrace();
         }
     }

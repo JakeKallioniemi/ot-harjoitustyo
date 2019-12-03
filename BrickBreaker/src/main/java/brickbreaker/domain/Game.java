@@ -19,7 +19,7 @@ public class Game {
         generator = new LevelGenerator();
         score = 0;
         level = 0;
-        lives = 1;
+        lives = 3;
     }
 
     public Ball getBall() {
@@ -33,17 +33,24 @@ public class Game {
     public List<Brick> getBricks() {
         return bricks;
     }
-    
+
     public int getScore() {
         return score;
     }
-    
+
     public int getLevel() {
         return level;
     }
-    
+
     public int getLives() {
         return lives;
+    }
+
+    public void newLevel() {
+        level++;
+        ball = new Ball(15);
+        paddle = new Paddle(190, 30);
+        bricks = generator.generate(level);
     }
 
     public void moveBall(double dt) {
@@ -81,7 +88,7 @@ public class Game {
                 } else if (ball.getY() < brick.getY() && movement.getY() > 0) {
                     ball.setMovement(new Point2D(movement.getX(), -movement.getY()));
                 }
-                
+
                 score += 100 + brick.getType() * 10;
             }
         });
@@ -98,11 +105,11 @@ public class Game {
         lives--;
         return false;
     }
-    
-    public boolean gameOver() {
-        return lives == 0;
+
+    public boolean isOver() {
+        return lives <= 0;
     }
-    
+
     public boolean levelCleared() {
         return bricks.size() == 0;
     }
@@ -113,7 +120,7 @@ public class Game {
                 paddle.getY() - ball.getRadius()
         );
     }
-    
+
     public void resetPaddle() {
         paddle.reset();
     }
@@ -123,10 +130,4 @@ public class Game {
         ball.setMovement(new Point2D(dxStart, -300));
     }
 
-    public void newLevel() {
-        level++;
-        ball = new Ball(15);
-        paddle = new Paddle(190, 30);
-        bricks = generator.generate(level);
-    }  
 }

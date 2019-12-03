@@ -1,5 +1,6 @@
 package brickbreaker.domain;
 
+import javafx.scene.shape.Rectangle;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -17,6 +18,17 @@ public class PaddleTest {
     public void correctStartingPosition() {
         assertEquals(545, paddle.getX(), 0.01);
         assertEquals(680, paddle.getY(), 0.01);
+    }
+
+    @Test
+    public void correctShape() {
+        assertEquals(Rectangle.class, paddle.getShape().getClass());
+    }
+
+    @Test
+    public void correctSize() {
+        assertEquals(190, paddle.getWidth(), 0.01);
+        assertEquals(30, paddle.getHeight(), 0.01);
     }
 
     @Test
@@ -41,5 +53,27 @@ public class PaddleTest {
     public void moveStaysInBoundsRightSide() {
         paddle.move(1000, 1);
         assertEquals(1090, paddle.getX(), 0.01);
+    }
+
+    @Test
+    public void positionResets() {
+        paddle.move(200, 1);
+        paddle.reset();
+        assertEquals(545, paddle.getX(), 0.01);
+        assertEquals(680, paddle.getY(), 0.01);
+    }
+
+    // testing superclass method here because it's abstract and can't be instantiated
+    @Test
+    public void collisionDetectedWhenShapesOverlap() {
+        Paddle other = new Paddle(190, 30);
+        assertTrue(paddle.intersects(other));
+    }
+
+    @Test
+    public void noCollisionWhenEdgesTouch() {
+        Paddle other = new Paddle(190, 30);
+        other.move(190, 1);
+        assertFalse(paddle.intersects(other));
     }
 }
