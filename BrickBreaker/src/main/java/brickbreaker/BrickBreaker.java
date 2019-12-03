@@ -1,5 +1,9 @@
 package brickbreaker;
 
+import brickbreaker.dao.FileHighScoreDao;
+import brickbreaker.dao.HighScoreDao;
+import brickbreaker.domain.HighScoreService;
+import brickbreaker.ui.EnterScoreView;
 import brickbreaker.ui.GameOverView;
 import brickbreaker.ui.GameView;
 import brickbreaker.ui.MenuView;
@@ -17,12 +21,15 @@ public class BrickBreaker extends Application {
 
     @Override
     public void init() {
-        viewManager = new ViewManager();
-        
+        HighScoreDao highScoreDao = new FileHighScoreDao("scores.txt");
+        HighScoreService highScoreService = new HighScoreService(highScoreDao, 10);
+       
+        viewManager = new ViewManager();      
         viewManager.addView("MENU", new MenuView(viewManager));
         viewManager.addView("PLAY", new GameView(viewManager));
-        viewManager.addView("SCORES", new ScoresView(viewManager));
-        viewManager.addView("GAME_OVER", new GameOverView(viewManager));
+        viewManager.addView("SCORES", new ScoresView(viewManager, highScoreService));
+        viewManager.addView("GAME_OVER", new GameOverView(viewManager, highScoreService));
+        viewManager.addView("ENTER_SCORE", new EnterScoreView(viewManager, highScoreService));
     }
 
     @Override

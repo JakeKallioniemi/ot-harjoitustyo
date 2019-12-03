@@ -1,6 +1,7 @@
 package brickbreaker.domain;
 
 import brickbreaker.dao.HighScoreDao;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -14,29 +15,43 @@ public class HighScoreService {
     public HighScoreService(HighScoreDao scoreDao, int scoreCount) {
         this.scoreDao = scoreDao;
         this.scoreCount = scoreCount;
-        scores = scoreDao.list().subList(0, scoreCount);
-        if (scores.isEmpty()) {
+        try {
+            scores = scoreDao.list();
+        } catch (IOException ex) {
             initScores();
         }
     }
-    
-    public boolean isHighScore(int score) {
-       return score > scores.get(scoreCount - 1).getScore();
+
+    public List<HighScoreEntry> getScores() {
+        return scores;
     }
-    
+
+    public boolean isHighScore(int score) {
+        return score > scores.get(scoreCount - 1).getScore();
+    }
+
     public void addScore(String name, int score) {
         scores.add(new HighScoreEntry(name, score));
         Collections.sort(scores);
         scores.remove(scoreCount);
-        scoreDao.add(scores);
+        try {
+            scoreDao.add(scores);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
-    
+
     private void initScores() {
         List<HighScoreEntry> placeholderScores = new ArrayList<>();
         for (int i = 1; i <= scoreCount; i++) {
             placeholderScores.add(new HighScoreEntry("CPU", 1000 * i));
         }
+        Collections.sort(placeholderScores);
         scores = placeholderScores;
-        scoreDao.add(placeholderScores);
+        try {
+            scoreDao.add(placeholderScores);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 }

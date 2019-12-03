@@ -2,6 +2,8 @@ package brickbreaker.ui;
 
 import static brickbreaker.BrickBreaker.GAME_HEIGHT;
 import static brickbreaker.BrickBreaker.GAME_WIDTH;
+import brickbreaker.domain.HighScoreService;
+import java.util.ArrayList;
 import java.util.List;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -16,11 +18,13 @@ import javafx.scene.text.TextAlignment;
 public class GameOverView implements View {
 
     private ViewManager viewManager;
+    private HighScoreService highScoreService;
     private Scene scene;
     private int score;
 
-    public GameOverView(ViewManager viewManager) {
+    public GameOverView(ViewManager viewManager, HighScoreService highScoreService) {
         this.viewManager = viewManager;
+        this.highScoreService = highScoreService;
     }
 
     @Override
@@ -49,7 +53,13 @@ public class GameOverView implements View {
         Scene scene = new Scene(root, GAME_WIDTH, GAME_HEIGHT, Color.BLACK);
 
         scene.setOnKeyPressed(event -> {
-            viewManager.changeView("MENU", null);
+            if (highScoreService.isHighScore(score)) {
+                List<Object> args = new ArrayList<>();
+                args.add(score);
+                viewManager.changeView("ENTER_SCORE", args);
+            } else {
+                viewManager.changeView("MENU", null);
+            }
         });
 
         return scene;

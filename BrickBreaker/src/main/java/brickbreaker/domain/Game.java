@@ -19,7 +19,7 @@ public class Game {
         generator = new LevelGenerator();
         score = 0;
         level = 0;
-        lives = 3;
+        lives = 1;
     }
 
     public Ball getBall() {
