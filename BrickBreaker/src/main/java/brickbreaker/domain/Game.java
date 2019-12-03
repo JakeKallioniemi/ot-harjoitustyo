@@ -11,12 +11,15 @@ public class Game {
     private Paddle paddle;
     private List<Brick> bricks;
     private LevelGenerator generator;
+    private int score;
+    private int level;
+    private int lives;
 
     public Game() {
         generator = new LevelGenerator();
-        ball = new Ball(15);
-        paddle = new Paddle(190, 30);
-        bricks = generator.generate(1);
+        score = 0;
+        level = 0;
+        lives = 3;
     }
 
     public Ball getBall() {
@@ -29,6 +32,18 @@ public class Game {
 
     public List<Brick> getBricks() {
         return bricks;
+    }
+    
+    public int getScore() {
+        return score;
+    }
+    
+    public int getLevel() {
+        return level;
+    }
+    
+    public int getLives() {
+        return lives;
     }
 
     public void moveBall(double dt) {
@@ -66,32 +81,52 @@ public class Game {
                 } else if (ball.getY() < brick.getY() && movement.getY() > 0) {
                     ball.setMovement(new Point2D(movement.getX(), -movement.getY()));
                 }
+                
+                score += 100 + brick.getType() * 10;
             }
         });
-        
+
         bricks.removeAll(toBeRemoved);
-        
+
         return toBeRemoved;
     }
 
+    public boolean ballInPlay() {
+        if (ball.inPlay()) {
+            return true;
+        }
+        lives--;
+        return false;
+    }
+    
     public boolean gameOver() {
-        return !ball.inPlay();
+        return lives == 0;
+    }
+    
+    public boolean levelCleared() {
+        return bricks.size() == 0;
     }
 
-    public void restartBall() {
+    public void resetBall() {
         ball.setPosition(
                 paddle.getX() + paddle.getWidth() / 2,
                 paddle.getY() - ball.getRadius()
         );
-        ballStart();
+    }
+    
+    public void resetPaddle() {
+        paddle.reset();
     }
 
     public void start() {
-        ballStart();
-    }
-    
-    public void ballStart() {
         double dxStart = ThreadLocalRandom.current().nextDouble(-300, 300);
         ball.setMovement(new Point2D(dxStart, -300));
     }
+
+    public void newLevel() {
+        level++;
+        ball = new Ball(15);
+        paddle = new Paddle(190, 30);
+        bricks = generator.generate(level);
+    }  
 }

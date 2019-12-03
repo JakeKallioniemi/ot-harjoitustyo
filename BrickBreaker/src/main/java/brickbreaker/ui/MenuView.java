@@ -33,7 +33,7 @@ public class MenuView implements View {
     }
 
     @Override
-    public void enter() {
+    public void enter(List<Object> args) {
         menuItems = new ArrayList<>();
         selectedItem = 0;
         scene = createScene();
@@ -102,10 +102,10 @@ public class MenuView implements View {
     private void select(String text) {
         switch (text) {
             case "PLAY":
-                viewManager.changeView("PLAY");
+                viewManager.changeView("PLAY", null);
                 break;
             case "SCORES":
-                viewManager.changeView("SCORES");
+                viewManager.changeView("SCORES", null);
                 break;
             case "EXIT":
                 Platform.exit();

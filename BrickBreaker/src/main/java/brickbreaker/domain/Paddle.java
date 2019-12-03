@@ -33,6 +33,11 @@ public class Paddle implements Entity {
         return shape.getHeight();
     }
 
+    public void reset() {
+        shape.setTranslateX(GAME_WIDTH / 2 - getWidth() / 2);
+        shape.setTranslateY(GAME_HEIGHT - getHeight() - 10);
+    }
+
     @Override
     public double getX() {
         return shape.getTranslateX();

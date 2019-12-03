@@ -1,5 +1,6 @@
 package brickbreaker;
 
+import brickbreaker.ui.GameOverView;
 import brickbreaker.ui.GameView;
 import brickbreaker.ui.MenuView;
 import brickbreaker.ui.ScoresView;
@@ -21,12 +22,13 @@ public class BrickBreaker extends Application {
         viewManager.addView("MENU", new MenuView(viewManager));
         viewManager.addView("PLAY", new GameView(viewManager));
         viewManager.addView("SCORES", new ScoresView(viewManager));
+        viewManager.addView("GAME_OVER", new GameOverView(viewManager));
     }
 
     @Override
     public void start(Stage stage) {
         viewManager.setStage(stage);
-        viewManager.changeView("MENU");
+        viewManager.changeView("MENU", null);
         stage.setTitle("BrickBreaker");
         stage.setResizable(false);
         stage.show();

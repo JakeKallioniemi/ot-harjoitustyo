@@ -2,6 +2,7 @@ package brickbreaker.ui;
 
 import static brickbreaker.BrickBreaker.GAME_HEIGHT;
 import static brickbreaker.BrickBreaker.GAME_WIDTH;
+import java.util.List;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -27,10 +28,10 @@ public class ScoresView implements View {
     }
 
     @Override
-    public void enter() {
+    public void enter(List<Object> args) {
         scene = createScene();
     }
-
+    
     private Scene createScene() {
         Text text = new Text("TODO");
         text.setTextAlignment(TextAlignment.CENTER);
@@ -44,7 +45,7 @@ public class ScoresView implements View {
         Scene scene = new Scene(root, GAME_WIDTH, GAME_HEIGHT, Color.BLACK);
 
         scene.setOnKeyPressed(event -> {
-            viewManager.changeView("MENU");
+            viewManager.changeView("MENU", null);
         });
         
         return scene;
