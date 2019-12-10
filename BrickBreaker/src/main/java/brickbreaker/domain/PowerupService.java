@@ -20,17 +20,17 @@ public class PowerupService {
     }
 
     public Powerup roll(double x, double y) {
-        if (random.nextInt(dropChance) == 0) {
-            int type = random.nextInt(types.length);
-            if (active[type] || onScreen[type]) {
-                return null;
-            }
-            onScreen[type] = true;
-            Point2D movement = new Point2D(0, 200);
-            Powerup powerup = new Powerup(x - 20, y, 40, 15, movement, types[type]);
-            return powerup;
+        if (random.nextInt(dropChance) != 0) {
+            return null;
         }
-        return null;
+        int type = random.nextInt(types.length);
+        if (active[type] || onScreen[type]) {
+            return null;
+        }
+        onScreen[type] = true;
+        Point2D movement = new Point2D(0, 200);
+        Powerup powerup = new Powerup(x - 20, y, 40, 15, movement, types[type]);
+        return powerup;
     }
 
     public void reset() {

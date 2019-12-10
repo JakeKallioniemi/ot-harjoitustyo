@@ -11,7 +11,7 @@ public class BrickTest {
 
     @Before
     public void setUp() {
-        brick = new Brick(10, 20, 105, 30, 2);
+        brick = new Brick(10, 20, 105, 30, 2, true, 1);
     }
 
     @Test
@@ -34,5 +34,11 @@ public class BrickTest {
     @Test
     public void correctType() {
         assertEquals(2, brick.getType());
+    }
+    
+    @Test
+    public void hitsLeftReduced() {
+        brick.hit();
+        assertEquals(0, brick.hitsLeft());
     }
 }

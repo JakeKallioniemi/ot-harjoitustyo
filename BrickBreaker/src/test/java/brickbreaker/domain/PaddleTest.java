@@ -38,7 +38,7 @@ public class PaddleTest {
     }
 
     @Test
-    public void deltaTimeChangesMovedDistance() {
+    public void dtChangesMovedDistance() {
         paddle.move(100, 0.5);
         assertEquals(595, paddle.getX(), 0.01);
     }

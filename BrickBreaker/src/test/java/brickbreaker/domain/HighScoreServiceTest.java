@@ -1,5 +1,6 @@
 package brickbreaker.domain;
 
+import brickbreaker.domain.mocks.MockHighScoreDao;
 import brickbreaker.dao.HighScoreDao;
 import java.util.List;
 import org.junit.Before;

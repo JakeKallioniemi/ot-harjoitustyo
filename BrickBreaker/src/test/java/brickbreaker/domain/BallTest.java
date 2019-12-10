@@ -12,7 +12,7 @@ public class BallTest {
 
     @Before
     public void setUp() {
-        ball = new Ball(15);
+        ball = new Ball(15, false);
     }
 
     @Test
@@ -50,6 +50,15 @@ public class BallTest {
         ball.move(1);
         assertEquals(660, ball.getX(), 0.01);
         assertEquals(615, ball.getY(), 0.01);
+    }
+
+    @Test
+    public void moveUsesDt() {
+        Point2D movement = new Point2D(20, -50);
+        ball.setMovement(movement);
+        ball.move(0.5);
+        assertEquals(650, ball.getX(), 0.01);
+        assertEquals(640, ball.getY(), 0.01);
     }
 
     @Test

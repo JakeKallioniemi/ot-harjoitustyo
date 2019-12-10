@@ -22,13 +22,16 @@ public class Ball extends Entity {
         shape.setTranslateX(getX() + movement.getX() * dt);
         shape.setTranslateY(getY() + movement.getY() * dt);
 
-        if (getX() - getRadius() < 0
-                || getX() + getRadius() > GAME_WIDTH) {
+        if (getX() - getRadius() < 0) {
             movement = new Point2D(-movement.getX(), movement.getY());
-        }
-
+            shape.setTranslateX(getRadius());
+        } else if (getX() + getRadius() > GAME_WIDTH) {
+            movement = new Point2D(-movement.getX(), movement.getY());
+            shape.setTranslateX(GAME_WIDTH - getRadius());
+        }       
         if (getY() - getRadius() < 0) {
             movement = new Point2D(movement.getX(), -movement.getY());
+            shape.setTranslateY(getRadius());
         }
     }
 

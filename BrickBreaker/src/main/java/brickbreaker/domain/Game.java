@@ -32,7 +32,7 @@ public class Game {
         this.bricks = bricks;
         this.powerups = powerups;
         Random random = new Random();
-        powerupService = new PowerupService(random, 10);
+        powerupService = new PowerupService(random, 8);
         levelGenerator = new LevelGenerator();
         score = 0;
         level = 1;
@@ -129,36 +129,45 @@ public class Game {
 
     public void handleBrickCollision() {
         List<Entity> toBeRemoved = new ArrayList<>();
-        bricks.forEach(brick -> {
-            balls.forEach(ball -> {
-                if (ball.intersects(brick)) {
-                    if (brick.isBreakable() || ball.isUnstoppable()) {
-                        brick.hit();
-                        if (brick.hitsLeft() == 0 || ball.isUnstoppable()) {
-                            if (brick.isBreakable()) {
-                                bricksLeft--;
-                            }
-                            toBeRemoved.add(brick);
-                            score += 100 + brick.getType() * 10;
-                            Powerup powerup = powerupService.roll(
-                                    brick.getX() + brick.getWidth() / 2,
-                                    brick.getY()
-                            );
-                            if (powerup != null) {
-                                powerups.add(powerup);
-                            }
-                        }
-                    }
-                    if (!ball.isUnstoppable()) {
-                        bounceBall(brick, ball);
-                    }
+        for (Brick brick : bricks) {
+            for (Ball ball : balls) {
+                if (!ball.intersects(brick)) {
+                    continue;
                 }
-            });
-        });
+                if (brickHit(brick, ball)) {
+                    toBeRemoved.add(brick);
+                }
+                if (!ball.isUnstoppable()) {
+                    bounceBall(brick, ball);
+                }
+            }
+        }
         bricks.removeAll(toBeRemoved);
     }
 
-    private void bounceBall(Brick brick, Ball ball) {
+    public boolean brickHit(Brick brick, Ball ball) {
+        if (!brick.isBreakable() && !ball.isUnstoppable()) {
+            return false;
+        }
+        brick.hit();
+        if (brick.hitsLeft() == 0 || ball.isUnstoppable()) {
+            if (brick.isBreakable()) {
+                bricksLeft--;
+            }
+            score += 100 + brick.getType() * 10;
+            Powerup powerup = powerupService.roll(
+                    brick.getX() + brick.getWidth() / 2,
+                    brick.getY()
+            );
+            if (powerup != null) {
+                powerups.add(powerup);
+            }
+            return true;
+        }
+        return false;
+    }
+
+    public void bounceBall(Brick brick, Ball ball) {
         Point2D movement = ball.getMovement();
 
         // doesn't always work, fix later
@@ -187,7 +196,7 @@ public class Game {
         powerups.removeAll(toBeRemoved);
     }
 
-    private void activatePower(PowerupType type) {
+    public void activatePower(PowerupType type) {
         powerupService.setActive(type);
         switch (type) {
             case EXTRA:
@@ -205,7 +214,7 @@ public class Game {
         }
     }
 
-    private void extraBalls() {
+    public void extraBalls() {
         boolean unstoppable = powerupService.isActive(PowerupType.SUPER);
         double radius = unstoppable ? SUPER_BALL_RADIUS : BALL_RADIUS;
         Ball left = new Ball(radius, unstoppable);
@@ -227,12 +236,12 @@ public class Game {
         balls.add(right);
     }
 
-    private void widePaddle() {
+    public void widePaddle() {
         paddle.setWidth(WIDE_PADDLE_WIDTH);
         paddle.move(-50, 1);
     }
 
-    private void superBall() {
+    public void superBall() {
         balls.forEach(ball -> {
             ball.setUnstoppable(true);
             ball.setRadius(SUPER_BALL_RADIUS);
