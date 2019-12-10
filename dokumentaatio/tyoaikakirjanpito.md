@@ -9,4 +9,6 @@
 | 26.11. | 6    | menu lisätty, rakennetta refaktoroitu, checkstyle käyttöön, kuva luokkarakenteesta |
 | 02.12. | 4    | game over ruutu, pisteiden laskenta, elämät (commit unohtui) |
 | 03.12. | 7    | parhaiden tulosten tallennus ja luku tiedostosta + ui näitä toimintoja varten, lisää testejä, sekvenssikaavio |
-| yht.   | 29   | | 
+| 09.12. | 6    | powerup-systeemi ja siihen liittyvä refaktorointi, tuki erilaisia tiiliä varten sekä gamen ja gameview:n välisen kommunikoinnin parantelu (commit unohtui taas...) |
+| 10.12. | 6    | testien korjaus ja lisää testejä, javadoc, arkkitehtuurikuvaus, käyttöohjeiden parantelu |
+| yht.   | 41   | | 
