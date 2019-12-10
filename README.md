@@ -13,6 +13,7 @@ Yksinkertainen Arkanoid-tyylinen peli satunnaisesti generoitavilla tasoilla.
 ## Releaset
 
 [Viikko 5](https://github.com/JakeKallioniemi/ot-harjoitustyo/releases/tag/viikko5)
+[Viikko 6](https://github.com/JakeKallioniemi/ot-harjoitustyo/releases/tag/viikko6)
 
 ## Komentorivitoiminnot
 
@@ -50,6 +51,16 @@ mvn jacoco:report
 ```
 
 Kattavuusraporttia voi tarkastella avaamalla selaimella tiedoston _target/site/jacoco/index.html_
+
+### JavaDoc
+
+JavaDoc generoidaan komennolla
+
+```
+mvn javadoc:javadoc
+```
+
+JavaDocia voi tarkastella avaamalla selaimella tiedoston _target/site/apidocs/index.html_
 
 ### Checkstyle
 
