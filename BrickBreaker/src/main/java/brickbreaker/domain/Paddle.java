@@ -6,6 +6,14 @@ import javafx.scene.shape.Rectangle;
 
 public class Paddle extends Entity {
 
+    /**
+     * Creates a new Paddle that extends Entity. Starting position is the bottom
+     * center of the screen. The shape of the Paddle is a Rectangle object.
+     *
+     * @param width the width of the paddle
+     * @param height the height of the paddle
+     * @see brickbreaker.domain.Entity
+     */
     public Paddle(double width, double height) {
         Rectangle rect = new Rectangle(width, height);
         rect.setArcWidth(20);
@@ -15,6 +23,12 @@ public class Paddle extends Entity {
         shape = rect;
     }
 
+    /**
+     * Moves the paddle along the x-axis and keeps it within game field.
+     *
+     * @param dx the direction to move to, left if negative, right if positive
+     * @param dt amount of time passed since last update in seconds
+     */
     public void move(double dx, double dt) {
         shape.setTranslateX(shape.getTranslateX() + dx * dt);
 
@@ -40,6 +54,9 @@ public class Paddle extends Entity {
         rect.setWidth(width);
     }
 
+    /**
+     * Resets the position of the paddle to bottom middle of the game field.
+     */
     public void resetPosition() {
         shape.setTranslateX(GAME_WIDTH / 2 - getWidth() / 2);
         shape.setTranslateY(GAME_HEIGHT - getHeight() - 10);

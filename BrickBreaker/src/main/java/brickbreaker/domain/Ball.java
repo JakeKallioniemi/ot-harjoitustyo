@@ -10,6 +10,15 @@ public class Ball extends Entity {
     private Point2D movement;
     private boolean unstoppable;
 
+    /**
+     * Creates a new Ball that extends Entity. The ball is stationary in the
+     * beginning. Starting position is just above the paddle. The shape of the
+     * Ball is a Circle object.
+     *
+     * @param radius the radius of the ball
+     * @param unstoppable tells if ball can be stopped by bricks or not
+     * @see brickbreaker.domain.Entity
+     */
     public Ball(double radius, boolean unstoppable) {
         this.unstoppable = unstoppable;
         shape = new Circle(radius);
@@ -18,6 +27,11 @@ public class Ball extends Entity {
         movement = Point2D.ZERO;
     }
 
+    /**
+     * Moves the ball and bounces it from walls if necessary.
+     *
+     * @param dt amount of time passed since last update in seconds
+     */
     public void move(double dt) {
         shape.setTranslateX(getX() + movement.getX() * dt);
         shape.setTranslateY(getY() + movement.getY() * dt);
@@ -28,13 +42,16 @@ public class Ball extends Entity {
         } else if (getX() + getRadius() > GAME_WIDTH) {
             movement = new Point2D(-movement.getX(), movement.getY());
             shape.setTranslateX(GAME_WIDTH - getRadius());
-        }       
+        }
         if (getY() - getRadius() < 0) {
             movement = new Point2D(movement.getX(), -movement.getY());
             shape.setTranslateY(getRadius());
         }
     }
 
+    /**
+     * Stops the ball from moving.
+     */
     public void stop() {
         movement = Point2D.ZERO;
     }
@@ -47,11 +64,22 @@ public class Ball extends Entity {
         this.unstoppable = unstoppable;
     }
 
+    /**
+     * Set the x and y coordinates of ball.
+     *
+     * @param x the x-coordinate
+     * @param y the y-coordinate
+     */
     public void setPosition(double x, double y) {
         shape.setTranslateX(x);
         shape.setTranslateY(y);
     }
 
+    /**
+     * Checks if ball is inside game field.
+     *
+     * @return true if ball is inbounds, otherwise false
+     */
     public boolean inPlay() {
         return shape.getTranslateY() - getRadius() < GAME_HEIGHT;
     }

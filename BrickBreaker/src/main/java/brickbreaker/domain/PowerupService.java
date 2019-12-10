@@ -11,6 +11,12 @@ public class PowerupService {
     private boolean[] active;
     private boolean[] onScreen;
 
+    /**
+     * Creates a new PowerupService that manages powerup spawning.
+     *
+     * @param random the Random object used for random rolls
+     * @param dropChance the drop chance of powerups is 1/dropChance
+     */
     public PowerupService(Random random, int dropChance) {
         this.random = random;
         this.dropChance = dropChance;
@@ -19,6 +25,16 @@ public class PowerupService {
         onScreen = new boolean[types.length];
     }
 
+    /**
+     * Roll for a chance of spawning a powerup. Powerups that are active or
+     * on-screen cannot spawn. Chance to spawn is based on dropChance set in
+     * constructor.
+     *
+     * @param x the x-coordinate of spawn point
+     * @param y the y-coordinate of spawn point
+     * @return the powerup if roll was successful, otherwise null
+     * @see brickbreaker.domain.Powerup
+     */
     public Powerup roll(double x, double y) {
         if (random.nextInt(dropChance) != 0) {
             return null;
@@ -33,6 +49,9 @@ public class PowerupService {
         return powerup;
     }
 
+    /**
+     * Makes every powerup available again.
+     */
     public void reset() {
         active = new boolean[active.length];
         onScreen = new boolean[onScreen.length];
@@ -42,11 +61,23 @@ public class PowerupService {
         return active[type.ordinal()];
     }
 
+    /**
+     * Marks powerup type as active if it is limited.
+     *
+     * @param type the type to set active
+     * @see brickbreaker.domain.PowerupType
+     */
     public void setActive(PowerupType type) {
         outOfBounds(type);
         active[type.ordinal()] = type.isLimited();
     }
 
+    /**
+     * Marks powerup type as not being on screen anymore.
+     *
+     * @param type the type of powerup
+     * @see brickbreaker.domain.PowerupType
+     */
     public void outOfBounds(PowerupType type) {
         onScreen[type.ordinal()] = false;
     }
