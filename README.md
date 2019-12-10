@@ -12,7 +12,7 @@ Yksinkertainen Arkanoid-tyylinen peli satunnaisesti generoitavilla tasoilla.
 
 ## Releaset
 
-[Viikko 5](https://github.com/JakeKallioniemi/ot-harjoitustyo/releases/tag/viikko5)
+[Viikko 5](https://github.com/JakeKallioniemi/ot-harjoitustyo/releases/tag/viikko5)  
 [Viikko 6](https://github.com/JakeKallioniemi/ot-harjoitustyo/releases/tag/viikko6)
 
 ## Komentorivitoiminnot
