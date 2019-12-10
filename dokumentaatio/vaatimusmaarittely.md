@@ -7,27 +7,27 @@ Kun kaikki palikat on tuhottu, pelaaja siirtyy seuraavalle tasolle. Jos pallo os
 
 ## Perusversion tarjoama toiminnallisuus
 
-- yllä kuvatun mukainen peli
-	- maila, jota pelaaja ohjaa vasemmalle ja oikealle \[**tehty**\]
-	- pallo, joka kimpoilee mailasta, seinistä ja palikoista \[**tehty**\]
-	- palikat, jotka tuhoutuvat, kun pallo osuu niihin \[**tehty**\]
+- yllä kuvatun mukainen peli \[**tehty**\]
+	- maila, jota pelaaja ohjaa vasemmalle ja oikealle 
+	- pallo, joka kimpoilee mailasta, seinistä ja palikoista 
+	- palikat, jotka tuhoutuvat, kun pallo osuu niihin 
 
 - satunnaisesti generoitavat tasot
 
-- pisteet \[**tehty (uusi!)**\]
-	- eriväriset palikat antavat erimäärän pisteitä \[**tehty (uusi!)**\]
-	- näytetään kokoajan yläkulmassa \[**tehty (uusi!)**\]
+- pisteet \[**tehty**\]
+	- eriväriset palikat antavat erimäärän pisteitä 
+	- näytetään kokoajan yläkulmassa 
 
-- highscore-systeemi \[**tehty (uusi!)**\]
-	- tallennetaan ja luetaan tiedostosta \[**tehty (uusi!)**\]
+- highscore-systeemi \[**tehty**\]
+	- tallennetaan ja luetaan tiedostosta 
 
-- valikko, josta pääsee pelaamaan tai tarkastelemaan highscoreja (tai poistumaan pelistä). \[**tehty (scores uutena)**\]
+- valikko, josta pääsee pelaamaan tai tarkastelemaan highscoreja (tai poistumaan pelistä). \[**tehty**\]
 
 ## Jatkokehitysideoita
 
 Lisätoiminnallisuudet suurinpiirtein todennäköisimmästä epätodennäköisimpään
 
-- powerup-systeemi
+- powerup-systeemi \[**tehty (uusi!)**\]
 	- enemmän palloja
 	- lisäelämiä
 	- suurempi maila
