@@ -34,7 +34,7 @@ Lisätoiminnallisuudet suurinpiirtein todennäköisimmästä epätodennäköisim
 	- pallo, joka menee palikoiden läpi
 	- jne.
 
-- erilaisia palikoita
+- erilaisia palikoita \[**tehty (uusi!)**\] tuki toiminnolle on tehty, mutta tasojen luonti ei vielä käytä sitä
 	- tuhoutumattomia
 	- liikkuvia
 	
