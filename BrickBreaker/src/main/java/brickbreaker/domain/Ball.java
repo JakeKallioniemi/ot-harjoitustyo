@@ -8,8 +8,10 @@ import javafx.scene.shape.Circle;
 public class Ball extends Entity {
 
     private Point2D movement;
+    private boolean unstoppable;
 
-    public Ball(double radius) {
+    public Ball(double radius, boolean unstoppable) {
+        this.unstoppable = unstoppable;
         shape = new Circle(radius);
         shape.setTranslateX(GAME_WIDTH / 2);
         shape.setTranslateY(GAME_HEIGHT - 40 - radius);
@@ -34,6 +36,14 @@ public class Ball extends Entity {
         movement = Point2D.ZERO;
     }
 
+    public boolean isUnstoppable() {
+        return unstoppable;
+    }
+
+    public void setUnstoppable(boolean unstoppable) {
+        this.unstoppable = unstoppable;
+    }
+
     public void setPosition(double x, double y) {
         shape.setTranslateX(x);
         shape.setTranslateY(y);
@@ -55,5 +65,9 @@ public class Ball extends Entity {
         Circle circ = (Circle) shape;
         return circ.getRadius();
     }
-    
+
+    public void setRadius(double radius) {
+        Circle circ = (Circle) shape;
+        circ.setRadius(radius);
+    }
 }

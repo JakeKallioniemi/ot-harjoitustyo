@@ -5,7 +5,14 @@ import java.util.List;
 
 public class LevelGenerator {
 
+    private int breakableBricks;
+
+    public LevelGenerator() {
+        breakableBricks = 0;
+    }
+    
     public List<Brick> generate(int level) {
+        breakableBricks = 0;
         // The same level every time for now
         List<Brick> bricks = new ArrayList<>();
 
@@ -19,11 +26,18 @@ public class LevelGenerator {
                         70 + i * brickHeight,
                         brickWidth,
                         brickHeight,
-                        5 - i
+                        5 - i,
+                        true,
+                        1
                 ));
+                breakableBricks++;
             }
         }
         
         return bricks;
+    }
+    
+    public int breakableBrickCount() {
+        return breakableBricks;
     }
 }

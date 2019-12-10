@@ -7,9 +7,12 @@ import javafx.scene.shape.Rectangle;
 public class Paddle extends Entity {
 
     public Paddle(double width, double height) {
-        shape = new Rectangle(width, height);
-        shape.setTranslateX(GAME_WIDTH / 2 - width / 2);
-        shape.setTranslateY(GAME_HEIGHT - height - 10);
+        Rectangle rect = new Rectangle(width, height);
+        rect.setArcWidth(20);
+        rect.setArcHeight(20);
+        rect.setTranslateX(GAME_WIDTH / 2 - width / 2);
+        rect.setTranslateY(GAME_HEIGHT - height - 10);
+        shape = rect;
     }
 
     public void move(double dx, double dt) {
@@ -32,9 +35,14 @@ public class Paddle extends Entity {
         return rect.getHeight();
     }
 
-    public void reset() {
+    public void setWidth(double width) {
+        Rectangle rect = (Rectangle) shape;
+        rect.setWidth(width);
+    }
+
+    public void resetPosition() {
         shape.setTranslateX(GAME_WIDTH / 2 - getWidth() / 2);
         shape.setTranslateY(GAME_HEIGHT - getHeight() - 10);
     }
-    
+
 }

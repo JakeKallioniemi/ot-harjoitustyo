@@ -58,7 +58,7 @@ public class PaddleTest {
     @Test
     public void positionResets() {
         paddle.move(200, 1);
-        paddle.reset();
+        paddle.resetPosition();
         assertEquals(545, paddle.getX(), 0.01);
         assertEquals(680, paddle.getY(), 0.01);
     }

@@ -2,8 +2,11 @@ package brickbreaker.ui;
 
 import static brickbreaker.BrickBreaker.GAME_HEIGHT;
 import static brickbreaker.BrickBreaker.GAME_WIDTH;
+import brickbreaker.domain.Ball;
 import brickbreaker.domain.Brick;
 import brickbreaker.domain.Game;
+import brickbreaker.domain.Powerup;
+import brickbreaker.domain.PowerupType;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -11,12 +14,16 @@ import java.util.Set;
 import javafx.animation.AnimationTimer;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
+import javafx.scene.shape.StrokeType;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
@@ -27,6 +34,9 @@ public class GameView implements View {
     private Game game;
     private AnimationTimer gameLoop;
     private Scene scene;
+    private StringProperty score;
+    private StringProperty lives;
+    private StringProperty level;
     private boolean paused;
 
     public GameView(ViewManager viewManager) {
@@ -40,24 +50,30 @@ public class GameView implements View {
 
     @Override
     public void enter(List<Object> args) {
-        game = new Game();
-        game.newLevel();
-        scene = createScene();
+        Group root = new Group();
+        List<Brick> bricks = createBrickList(root);
+        List<Ball> balls = createBallList(root);
+        List<Powerup> powerups = createPowerupList(root);
+        game = new Game(balls, bricks, powerups);
+        score = new SimpleStringProperty();
+        lives = new SimpleStringProperty();
+        level = new SimpleStringProperty();
+        scene = createScene(root, createStartBox(), createInfoBox());
         paused = true;
         gameLoop.start();
     }
 
-    private Scene createScene() {
-        StringProperty score = new SimpleStringProperty();
-        StringProperty lives = new SimpleStringProperty();
-
+    private Scene createScene(Group root, VBox startBox, VBox infoBox) {
         score.setValue("Score: " + game.getScore());
         lives.setValue("Lives: " + game.getLives());
+        level.setValue("ROUND " + game.getLevel());
 
-        Group root = new Group();
-        addNodes(root, score, lives);
+        Shape shape = game.getPaddle().getShape();
+        stylePaddle(shape);
 
-        Scene scene = new Scene(root, GAME_WIDTH, GAME_HEIGHT, Color.DARKGRAY);
+        root.getChildren().addAll(shape, infoBox, startBox);
+
+        Scene scene = new Scene(root, GAME_WIDTH, GAME_HEIGHT, Color.LIGHTGRAY);
 
         Set<KeyCode> keysPressed = new HashSet<>();
         scene.setOnKeyPressed(event -> {
@@ -67,13 +83,13 @@ public class GameView implements View {
             keysPressed.remove(event.getCode());
         });
 
-        gameLoop = createGameLoop(keysPressed, root, score, lives);
+        gameLoop = createGameLoop(keysPressed, root, startBox);
 
         return scene;
     }
 
     private AnimationTimer createGameLoop(Set<KeyCode> keysPressed, Group root,
-            StringProperty score, StringProperty lives) {
+            VBox startBox) {
 
         AnimationTimer timer = new AnimationTimer() {
 
@@ -91,37 +107,29 @@ public class GameView implements View {
                 if (keysPressed.contains(KeyCode.ENTER) && paused) {
                     paused = false;
                     game.start();
-                    int size = root.getChildren().size();
-                    root.getChildren().remove(size - 1);
+                    root.getChildren().remove(startBox);
                 }
                 if (keysPressed.contains(KeyCode.LEFT)) {
-                    game.movePaddle(-600, dt);
+                    game.movePaddle(-1, dt);
                 }
                 if (keysPressed.contains(KeyCode.RIGHT)) {
-                    game.movePaddle(600, dt);
+                    game.movePaddle(1, dt);
                 }
                 if (paused) {
                     game.resetBall();
                     return;
                 }
 
-                game.moveBall(dt);
-                game.handlePaddleCollision();
+                game.update(dt);
 
-                List<Brick> toBeRemoved = game.handleBrickCollision();
-                if (toBeRemoved.size() > 0) {
-                    toBeRemoved.forEach(brick -> {
-                        root.getChildren().remove(brick.getShape());
-                    });
-                }
-                score.setValue("Score: " + game.getScore());
-
-                if (!game.ballInPlay()) {
-                    game.resetBall();
-                    game.resetPaddle();
-                    root.getChildren().add(createStartBox());
+                if (!game.inPlay()) {
+                    game.reset();
+                    level.setValue("ROUND " + game.getLevel());
+                    root.getChildren().add(startBox);
                     paused = true;
                 }
+
+                score.setValue("Score: " + game.getScore());
                 lives.setValue("Lives: " + game.getLives());
 
                 if (game.isOver()) {
@@ -133,7 +141,8 @@ public class GameView implements View {
 
                 if (game.levelCleared()) {
                     game.newLevel();
-                    addNodes(root, score, lives);
+                    level.setValue("ROUND " + game.getLevel());
+                    root.getChildren().add(startBox);
                     paused = true;
                 }
             }
@@ -141,33 +150,7 @@ public class GameView implements View {
         return timer;
     }
 
-    private void addNodes(Group root, StringProperty score, StringProperty lives) {
-        root.getChildren().clear();
-
-        root.getChildren().add(createInfoBox(score, lives));
-        root.getChildren().add(game.getPaddle().getShape());
-        root.getChildren().add(game.getBall().getShape());
-
-        Color[] brickColors = new Color[]{
-            Color.BLUE,
-            Color.RED,
-            Color.GREEN,
-            Color.ORANGE,
-            Color.YELLOW,
-            Color.VIOLET
-        };
-
-        game.getBricks().forEach(brick -> {
-            Shape shape = brick.getShape();
-            shape.setFill(brickColors[brick.getType()]);
-            shape.setStroke(Color.BLACK);
-            root.getChildren().add(shape);
-        });
-
-        root.getChildren().add(createStartBox());
-    }
-
-    private VBox createInfoBox(StringProperty score, StringProperty lives) {
+    private VBox createInfoBox() {
         Text scoreCounter = createInfoText(score);
         Text livesCounter = createInfoText(lives);
 
@@ -177,7 +160,7 @@ public class GameView implements View {
 
         return info;
     }
-    
+
     private Text createInfoText(StringProperty property) {
         Text text = new Text();
         text.setFont(new Font(15));
@@ -186,10 +169,11 @@ public class GameView implements View {
     }
 
     private VBox createStartBox() {
-        Text level = createText("LEVEL " + game.getLevel(), 200);
+        Text levelText = createText("", 200);
+        levelText.textProperty().bind(level);
         Text instruction = createText("PRESS ENTER TO START", 100);
 
-        VBox box = new VBox(level, instruction);
+        VBox box = new VBox(levelText, instruction);
         box.setTranslateX(150);
         box.setTranslateY(50);
 
@@ -203,5 +187,119 @@ public class GameView implements View {
         text.setFill(Color.BLACK);
         text.setStroke(Color.DARKGRAY);
         return text;
+    }
+
+    private List<Brick> createBrickList(Group root) {
+        ObservableList<Brick> bricks = FXCollections.observableArrayList();
+        bricks.addListener((ListChangeListener<Brick>) c -> {
+            while (c.next()) {
+                if (c.wasAdded()) {
+                    List<? extends Brick> added = c.getAddedSubList();
+                    added.forEach(brick -> {
+                        Shape shape = brick.getShape();
+                        styleBrick(shape, brick.getType());
+                        root.getChildren().add(shape);
+                    });
+                }
+                if (c.wasRemoved()) {
+                    List<? extends Brick> removed = c.getRemoved();
+                    removed.forEach(brick -> {
+                        root.getChildren().remove(brick.getShape());
+                    });
+                }
+            }
+        });
+
+        return bricks;
+    }
+
+    private void styleBrick(Shape shape, int type) {
+        Color[] brickColors = new Color[]{
+            Color.BLUE,
+            Color.RED,
+            Color.GREEN,
+            Color.ORANGE,
+            Color.YELLOW,
+            Color.VIOLET
+        };
+
+        shape.setFill(brickColors[type]);
+        shape.setStroke(Color.BLACK);
+    }
+
+    private List<Ball> createBallList(Group root) {
+        ObservableList<Ball> balls = FXCollections.observableArrayList();
+        balls.addListener((ListChangeListener<Ball>) c -> {
+            while (c.next()) {
+                if (c.wasAdded()) {
+                    List<? extends Ball> added = c.getAddedSubList();
+                    added.forEach(ball -> {
+                        Shape shape = ball.getShape();
+                        styleBall(shape);
+                        root.getChildren().add(shape);
+                    });
+                }
+                if (c.wasRemoved()) {
+                    List<? extends Ball> removed = c.getRemoved();
+                    removed.forEach(ball -> {
+                        root.getChildren().remove(ball.getShape());
+                    });
+                }
+            }
+        });
+
+        return balls;
+    }
+
+    private void styleBall(Shape shape) {
+        shape.setFill(Color.DARKGRAY);
+        shape.setStrokeType(StrokeType.INSIDE);
+        shape.setStrokeWidth(3);
+        shape.setStroke(Color.BLACK);
+    }
+
+    private List<Powerup> createPowerupList(Group root) {
+        ObservableList<Powerup> powerups = FXCollections.observableArrayList();
+        powerups.addListener((ListChangeListener<Powerup>) c -> {
+            while (c.next()) {
+                if (c.wasAdded()) {
+                    List<? extends Powerup> added = c.getAddedSubList();
+                    added.forEach(powerup -> {
+                        Shape shape = powerup.getShape();
+                        stylePowerup(shape, powerup.getType());
+                        root.getChildren().add(shape);
+                    });
+                }
+                if (c.wasRemoved()) {
+                    List<? extends Powerup> removed = c.getRemoved();
+                    removed.forEach(powerup -> {
+                        root.getChildren().remove(powerup.getShape());
+                    });
+                }
+            }
+        });
+
+        return powerups;
+    }
+
+    private void stylePowerup(Shape shape, PowerupType type) {
+        Color[] powerupColors = new Color[]{
+            Color.AQUA,
+            Color.DARKORCHID,
+            Color.HOTPINK,
+            Color.CRIMSON
+        };
+
+        shape.setFill(powerupColors[type.ordinal()]);
+        shape.setStrokeType(StrokeType.INSIDE);
+        shape.setStrokeWidth(2);
+        shape.setStroke(Color.BLACK);
+    }
+
+    private void stylePaddle(Shape shape) {
+        shape.setFill(Color.DARKGRAY);
+        shape.setStrokeType(StrokeType.INSIDE);
+        shape.setStrokeWidth(5);
+        shape.setStroke(Color.BLACK);
     }
 }
