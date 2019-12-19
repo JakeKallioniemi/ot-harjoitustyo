@@ -215,12 +215,15 @@ public class GameView implements View {
 
     private void styleBrick(Shape shape, int type) {
         Color[] brickColors = new Color[]{
-            Color.BLUE,
-            Color.RED,
-            Color.GREEN,
+            Color.WHITESMOKE,
             Color.ORANGE,
-            Color.YELLOW,
-            Color.VIOLET
+            Color.CYAN,
+            Color.GREEN,
+            Color.RED,
+            Color.BLUE,
+            Color.VIOLET,
+            Color.GOLD,
+            Color.GRAY
         };
 
         shape.setFill(brickColors[type]);

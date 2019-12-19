@@ -20,7 +20,7 @@ public class Game {
     private int bricksLeft;
 
     private static final double BALL_RADIUS = 10;
-    private static final double BALL_STARTING_SPEED = 300;
+    private static final double BALL_STARTING_SPEED = 400;
     private static final double SUPER_BALL_RADIUS = 17;
     private static final double PADDLE_WIDTH = 150;
     private static final double PADDLE_HEIGHT = 30;
@@ -33,7 +33,7 @@ public class Game {
         this.powerups = powerups;
         Random random = new Random();
         powerupService = new PowerupService(random, 8);
-        levelGenerator = new LevelGenerator();
+        levelGenerator = new LevelGenerator(13, 7, 98, 30, random);
         score = 0;
         level = 1;
         lives = 3;
@@ -121,10 +121,32 @@ public class Game {
     public void handlePaddleCollision() {
         balls.forEach(ball -> {
             if (ball.intersects(paddle) && ball.getMovement().getY() > 0) {
+                double xMovement = bounceFromPaddle(ball);
                 Point2D movement = ball.getMovement();
-                ball.setMovement(new Point2D(movement.getX(), -movement.getY()));
+                ball.setMovement(new Point2D(xMovement, -movement.getY()));
             }
         });
+    }
+
+    public double bounceFromPaddle(Ball ball) {
+        double zoneEnd = paddle.getWidth() / 5;
+        double ballX = ball.getX();
+        double paddleX = paddle.getX();
+        double xMovement;
+
+        // The paddle is split into 5 zones that change the way the ball bounces
+        if (ballX < paddleX + zoneEnd) {
+            xMovement = -300;
+        } else if (ballX < paddleX + zoneEnd * 2) {
+            xMovement = -150;
+        } else if (ballX < paddleX + zoneEnd * 3) {
+            xMovement = 0;
+        } else if (ballX < paddleX + zoneEnd * 4) {
+            xMovement = 150;
+        } else {
+            xMovement = 300;
+        }
+        return xMovement;
     }
 
     public void handleBrickCollision() {
@@ -138,7 +160,7 @@ public class Game {
                     toBeRemoved.add(brick);
                 }
                 if (!ball.isUnstoppable()) {
-                    bounceBall(brick, ball);
+                    bounceFromBrick(brick, ball);
                 }
             }
         }
@@ -154,7 +176,7 @@ public class Game {
             if (brick.isBreakable()) {
                 bricksLeft--;
             }
-            score += 100 + brick.getType() * 10;
+            score += 50 + brick.getType() * 10;
             Powerup powerup = powerupService.roll(
                     brick.getX() + brick.getWidth() / 2,
                     brick.getY()
@@ -167,12 +189,10 @@ public class Game {
         return false;
     }
 
-    public void bounceBall(Brick brick, Ball ball) {
+    public void bounceFromBrick(Brick brick, Ball ball) {
         Point2D movement = ball.getMovement();
 
-        // doesn't always work, fix later
-        if (ball.getX() + ball.getRadius() < brick.getX()
-                && movement.getX() > 0) {
+        if (ball.getX() < brick.getX() && movement.getX() > 0) {
             ball.setMovement(new Point2D(-movement.getX(), movement.getY()));
         } else if (ball.getX() - ball.getRadius() > brick.getX() + brick.getWidth()
                 && movement.getX() < 0) {
