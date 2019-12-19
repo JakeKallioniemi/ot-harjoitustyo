@@ -11,4 +11,5 @@
 | 03.12. | 7    | parhaiden tulosten tallennus ja luku tiedostosta + ui näitä toimintoja varten, lisää testejä, sekvenssikaavio |
 | 09.12. | 6    | powerup-systeemi ja siihen liittyvä refaktorointi, tuki erilaisia tiiliä varten sekä gamen ja gameview:n välisen kommunikoinnin parantelu (commit unohtui taas...) |
 | 10.12. | 6    | testien korjaus ja lisää testejä, javadoc, arkkitehtuurikuvaus, käyttöohjeiden parantelu |
-| yht.   | 41   | | 
+| 19.12. | 2    | tasojen luonnin aloitus ja muutoksia mailaan |
+| yht.   | 43   | | 
