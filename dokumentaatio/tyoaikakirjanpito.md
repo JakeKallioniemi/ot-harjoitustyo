@@ -12,4 +12,5 @@
 | 09.12. | 6    | powerup-systeemi ja siihen liittyvä refaktorointi, tuki erilaisia tiiliä varten sekä gamen ja gameview:n välisen kommunikoinnin parantelu (commit unohtui taas...) |
 | 10.12. | 6    | testien korjaus ja lisää testejä, javadoc, arkkitehtuurikuvaus, käyttöohjeiden parantelu |
 | 19.12. | 2    | tasojen luonnin aloitus ja muutoksia mailaan |
-| yht.   | 43   | | 
+| 20.12. | 2    | tasojen luonnin viimeistely, uuden highscoren korostus ja lisäää dokumentointia |
+| yht.   | 45   | | 
