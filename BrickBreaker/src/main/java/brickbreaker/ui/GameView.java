@@ -116,14 +116,14 @@ public class GameView implements View {
                     game.movePaddle(1, dt);
                 }
                 if (paused) {
-                    game.resetBall();
+                    game.centerBallOnPaddle();
                     return;
                 }
 
                 game.update(dt);
 
                 if (!game.inPlay()) {
-                    game.reset();
+                    game.resetMovableEntities();
                     level.setValue("ROUND " + game.getLevel());
                     root.getChildren().add(startBox);
                     paused = true;

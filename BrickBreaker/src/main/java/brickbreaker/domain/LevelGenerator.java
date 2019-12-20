@@ -15,7 +15,18 @@ public class LevelGenerator {
     private int breakableBricks;
     private int topSpace;
     private int sideSpace;
+    private final int normalTypeCount;
 
+    /**
+     * Creates a new LevelGenerator that is used to randomly generate levels
+     * from different row types.
+     *
+     * @param columns amount of bricks per column
+     * @param rows amount of rows
+     * @param brickWidth width of a brick
+     * @param brickHeight height of a brick
+     * @param random used for level generation
+     */
     public LevelGenerator(int columns, int rows, int brickWidth,
             int brickHeight, Random random) {
 
@@ -27,27 +38,21 @@ public class LevelGenerator {
         breakableBricks = 0;
         topSpace = 70;
         sideSpace = (GAME_WIDTH - columns * brickWidth) / 2;
+        normalTypeCount = 7;
     }
 
-    public List<Brick> generate(int level) {
-        breakableBricks = 0;
+    /**
+     * Randomly generates a new arrangement of bricks using the Random object
+     * supplied in constructor.
+     *
+     * @return list of generated bricks
+     */
+    public List<Brick> generate() {
         List<Brick> bricks = new ArrayList<>();
-
+        breakableBricks = 0;
         for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < 13; j++) {
-                bricks.add(new Brick(
-                        3 + j * brickWidth,
-                        70 + i * brickHeight,
-                        brickWidth,
-                        brickHeight,
-                        6 - i,
-                        true,
-                        1
-                ));
-                breakableBricks++;
-            }
+            generateRow(bricks, i);
         }
-
         return bricks;
     }
 
@@ -56,11 +61,13 @@ public class LevelGenerator {
     }
 
     private void generateRow(List<Brick> bricks, int row) {
+        // The range is higher than the amount of cases
+        // to increase the chance of rolling a normal row.
         int roll = random.nextInt(8);
 
         switch (roll) {
             case 0:
-                // Empty row
+                // Empty row.
                 break;
             case 1:
                 gapsRow(bricks, row);
@@ -80,38 +87,58 @@ public class LevelGenerator {
         }
     }
 
+    // The row methods could be combined by using flags
+    // but I think it's more clear this way.
     private void gapsRow(List<Brick> bricks, int row) {
-        int type = random.nextInt(7);
+        int type = random.nextInt(normalTypeCount);
         for (int j = 0; j < columns; j += 2) {
             bricks.add(createBrick(j, row, type));
         }
     }
 
     private void alternatingRow(List<Brick> bricks, int row) {
-        int firstType = random.nextInt(7);
-        int secondType = random.nextInt(7);
+        // Becomes a normal row if same type rolled twice.
+        int firstType = random.nextInt(normalTypeCount);
+        int secondType = random.nextInt(normalTypeCount);
         for (int j = 0; j < columns; j++) {
-            
+            if (j % 2 == 0) {
+                bricks.add(createBrick(j, row, firstType));
+            } else {
+                bricks.add(createBrick(j, row, secondType));
+            }
         }
     }
 
     private void unbreakableRow(List<Brick> bricks, int row) {
+        for (int j = 0; j < columns; j += 3) {
+            bricks.add(createBrick(j, row, 8));
+        }
     }
 
     private void multihitRow(List<Brick> bricks, int row) {
+        for (int j = 0; j < columns; j++) {
+            bricks.add(createBrick(j, row, 7));
+        }
     }
 
     private void normalRow(List<Brick> bricks, int row) {
+        int type = random.nextInt(normalTypeCount);
+        for (int j = 0; j < columns; j++) {
+            bricks.add(createBrick(j, row, type));
+        }
     }
-    
+
     private Brick createBrick(int column, int row, int type) {
         int hitsToDestroy = type == 7 ? 3 : 1;
-        boolean breakable = type == 8;
+        boolean breakable = type != 8;
         Brick brick = new Brick(
                 sideSpace + column * brickWidth, topSpace + row * brickHeight,
                 brickWidth, brickHeight,
                 type, breakable, hitsToDestroy
         );
+        if (breakable) {
+            breakableBricks++;
+        }
         return brick;
     }
 }

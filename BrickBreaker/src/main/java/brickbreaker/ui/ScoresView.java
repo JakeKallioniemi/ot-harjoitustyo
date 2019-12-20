@@ -35,7 +35,7 @@ public class ScoresView implements View {
     public void enter(List<Object> args) {
         scene = createScene();
     }
-    
+
     private Scene createScene() {
         Text title = new Text("HIGHSCORES");
         title.setTextAlignment(TextAlignment.CENTER);
@@ -43,7 +43,7 @@ public class ScoresView implements View {
         title.setFill(Color.WHITE);
 
         VBox scoreBox = createScoreBox();
-        
+
         StackPane root = new StackPane(title, scoreBox);
         StackPane.setAlignment(title, Pos.TOP_CENTER);
         StackPane.setMargin(title, new Insets(10));
@@ -53,21 +53,26 @@ public class ScoresView implements View {
         scene.setOnKeyPressed(event -> {
             viewManager.changeView("MENU", null);
         });
-        
+
         return scene;
     }
-    
+
     private VBox createScoreBox() {
         VBox box = new VBox();
         box.setAlignment(Pos.BOTTOM_CENTER);
         box.setPadding(new Insets(20, 0, 50, 0));
-        
+
         List<HighScoreEntry> scores = highScoreService.getScores();
+        int highlightIndex = highScoreService.getNewestScoreIndex();
         for (int i = 0; i < scores.size(); i++) {
             HighScoreEntry score = scores.get(i);
             Text text = new Text((i + 1) + ".  " + score.getName() + "  " + score.getScore());
             text.setFont(new Font(40));
-            text.setFill(Color.WHITE);
+            if (i == highlightIndex) {
+                text.setFill(Color.GOLD);
+            } else {
+                text.setFill(Color.WHITE);
+            }
             text.setTextAlignment(TextAlignment.LEFT);
             box.getChildren().add(text);
         }

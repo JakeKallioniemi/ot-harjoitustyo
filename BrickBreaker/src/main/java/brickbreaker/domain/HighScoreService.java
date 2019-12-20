@@ -11,6 +11,7 @@ public class HighScoreService {
     private HighScoreDao scoreDao;
     private List<HighScoreEntry> scores;
     private int scoreCount;
+    private int newestIndex;
 
     /**
      * Creates a new HighScoreService that uses a HighScoreDao to save and fetch
@@ -25,6 +26,7 @@ public class HighScoreService {
     public HighScoreService(HighScoreDao scoreDao, int scoreCount) {
         this.scoreDao = scoreDao;
         this.scoreCount = scoreCount;
+        newestIndex = -1;
         try {
             scores = scoreDao.list();
             if (scores.isEmpty()) {
@@ -37,6 +39,18 @@ public class HighScoreService {
 
     public List<HighScoreEntry> getScores() {
         return scores;
+    }
+    
+    /**
+     * Returns the index of the most recent score and then resets
+     * it to default value.
+     * 
+     * @return index of the most recent score or -1 if no new score
+     */
+    public int getNewestScoreIndex() {
+        int temp = newestIndex;
+        newestIndex = -1;
+        return temp;
     }
 
     /**
@@ -59,9 +73,11 @@ public class HighScoreService {
      * @see brickbreaker.dao.HighScoreDao
      */
     public void addScore(String name, int score) {
-        scores.add(new HighScoreEntry(name, score));
+        HighScoreEntry newScore = new HighScoreEntry(name, score);
+        scores.add(newScore);
         Collections.sort(scores);
         scores.remove(scoreCount);
+        newestIndex = scores.indexOf(newScore);
         try {
             scoreDao.add(scores);
         } catch (IOException ex) {

@@ -27,19 +27,26 @@ public class Game {
     private static final double WIDE_PADDLE_WIDTH = 250;
     private static final int PADDLE_SPEED = 600;
 
+    /**
+     * Creates a new Game, which manages the state of the game.
+     *
+     * @param balls list for balls
+     * @param bricks list for bricks
+     * @param powerups list for powerups
+     */
     public Game(List<Ball> balls, List<Brick> bricks, List<Powerup> powerups) {
         this.balls = balls;
         this.bricks = bricks;
         this.powerups = powerups;
         Random random = new Random();
         powerupService = new PowerupService(random, 8);
-        levelGenerator = new LevelGenerator(13, 7, 98, 30, random);
+        levelGenerator = new LevelGenerator(13, 8, 98, 30, random);
         score = 0;
         level = 1;
         lives = 3;
         paddle = new Paddle(PADDLE_WIDTH, PADDLE_HEIGHT);
         this.balls.add(new Ball(BALL_RADIUS, false));
-        this.bricks.addAll(levelGenerator.generate(level));
+        this.bricks.addAll(levelGenerator.generate());
         bricksLeft = levelGenerator.breakableBrickCount();
     }
 
@@ -67,18 +74,22 @@ public class Game {
         return lives;
     }
 
+    /**
+     * Resets entities and initializes a new level.
+     */
     public void newLevel() {
         level++;
         bricks.clear();
-        powerups.clear();
-        balls.clear();
-        bricks.addAll(levelGenerator.generate(level));
+        bricks.addAll(levelGenerator.generate());
         bricksLeft = levelGenerator.breakableBrickCount();
-        balls.add(new Ball(BALL_RADIUS, false));
-        paddle.setWidth(PADDLE_WIDTH);
-        powerupService.reset();
+        resetMovableEntities();
     }
 
+    /**
+     * Moves objects and checks and handles collisions.
+     *
+     * @param dt time passed since last update
+     */
     public void update(double dt) {
         moveBalls(dt);
         movePowerups(dt);
@@ -110,6 +121,13 @@ public class Game {
         powerups.removeAll(toBeRemoved);
     }
 
+    /**
+     * Moves the paddle by PADDLE_SPEED. Left if direction is negative, right if
+     * positive.
+     *
+     * @param direction the direction of movement
+     * @param dt time passed since last update
+     */
     public void movePaddle(int direction, double dt) {
         if (direction < 0) {
             paddle.move(-PADDLE_SPEED, dt);
@@ -237,23 +255,18 @@ public class Game {
     public void extraBalls() {
         boolean unstoppable = powerupService.isActive(PowerupType.SUPER);
         double radius = unstoppable ? SUPER_BALL_RADIUS : BALL_RADIUS;
-        Ball left = new Ball(radius, unstoppable);
-        Ball right = new Ball(radius, unstoppable);
+        balls.add(extraBall(-BALL_STARTING_SPEED, radius, unstoppable));
+        balls.add(extraBall(BALL_STARTING_SPEED, radius, unstoppable));
+    }
 
-        left.setPosition(
+    private Ball extraBall(double xSpeed, double radius, boolean unstoppable) {
+        Ball ball = new Ball(radius, unstoppable);
+        ball.setPosition(
                 paddle.getX() + paddle.getWidth() / 2,
-                paddle.getY() - left.getRadius()
+                paddle.getY() - ball.getRadius()
         );
-        right.setPosition(
-                paddle.getX() + paddle.getWidth() / 2,
-                paddle.getY() - left.getRadius()
-        );
-
-        left.setMovement(new Point2D(-BALL_STARTING_SPEED, -BALL_STARTING_SPEED));
-        right.setMovement(new Point2D(BALL_STARTING_SPEED, -BALL_STARTING_SPEED));
-
-        balls.add(left);
-        balls.add(right);
+        ball.setMovement(new Point2D(xSpeed, -BALL_STARTING_SPEED));
+        return ball;
     }
 
     public void widePaddle() {
@@ -268,6 +281,11 @@ public class Game {
         });
     }
 
+    /**
+     * Checks if there are any balls currently in play.
+     *
+     * @return true if one or more balls in play, otherwise false
+     */
     public boolean inPlay() {
         if (!balls.isEmpty()) {
             return true;
@@ -276,15 +294,29 @@ public class Game {
         return false;
     }
 
+    /**
+     * Checks if the game is over (0 lives left).
+     *
+     * @return true if game is over, otherwise false
+     */
     public boolean isOver() {
         return lives <= 0;
     }
 
+    /**
+     * Checks if the level is cleared.
+     *
+     * @return true if level is cleared, otherwise false
+     */
     public boolean levelCleared() {
         return bricksLeft == 0;
     }
 
-    public void resetBall() {
+    /**
+     * Changes the balls position to the center of the paddle horizontally and
+     * just above the paddle vertically.
+     */
+    public void centerBallOnPaddle() {
         Ball ball = balls.get(0);
         ball.setPosition(
                 paddle.getX() + paddle.getWidth() / 2,
@@ -292,19 +324,23 @@ public class Game {
         );
     }
 
-    public void reset() {
-        Ball ball = new Ball(BALL_RADIUS, false);
-        ball.setPosition(
-                paddle.getX() + paddle.getWidth() / 2,
-                paddle.getY() - ball.getRadius()
-        );
-        balls.add(ball);
+    /**
+     * Resets balls, paddle and powerups to the state they were in the beginning
+     * of level.
+     */
+    public void resetMovableEntities() {
         paddle.resetPosition();
         paddle.setWidth(PADDLE_WIDTH);
+        balls.clear();
+        balls.add(new Ball(BALL_RADIUS, false));
         powerups.clear();
         powerupService.reset();
     }
 
+    /**
+     * Gives the ball a starting speed. Horizontal speed is randomly chosen
+     * between negative and positive BALL_STARTING_SPEED.
+     */
     public void start() {
         double dxStart = ThreadLocalRandom
                 .current()

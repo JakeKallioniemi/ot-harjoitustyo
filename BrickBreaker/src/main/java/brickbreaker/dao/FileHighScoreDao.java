@@ -17,12 +17,18 @@ public class FileHighScoreDao implements HighScoreDao {
         this.fileName = fileName;
     }
 
+    /**
+     * Reads and lists all the high score entries from file.
+     *
+     * @return list of the high score entries
+     * @throws IOException
+     */
     @Override
     public List<HighScoreEntry> list() throws IOException {
         List<HighScoreEntry> scores = new ArrayList<>();
         Scanner scanner = new Scanner(new File(fileName));
         scanner.useDelimiter("\n");
-        
+
         while (scanner.hasNext()) {
             String[] fields = scanner.next().split("\t");
             String name = fields[0];
@@ -31,10 +37,16 @@ public class FileHighScoreDao implements HighScoreDao {
             scores.add(entry);
         }
         scanner.close();
-        
+
         return scores;
     }
 
+    /**
+     * Writes the supplied scores to file, overwriting the old ones.
+     *
+     * @param scores list of scores to be written
+     * @throws IOException
+     */
     @Override
     public void add(List<HighScoreEntry> scores) throws IOException {
         PrintWriter printWriter = new PrintWriter(new FileWriter(fileName));

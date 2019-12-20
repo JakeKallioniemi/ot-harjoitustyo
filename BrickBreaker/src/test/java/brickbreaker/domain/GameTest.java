@@ -54,7 +54,7 @@ public class GameTest {
     @Test
     public void ballFollowsPaddle() {
         game.movePaddle(-545, 1);
-        game.resetBall();
+        game.centerBallOnPaddle();
         assertEquals(75, game.getBalls().get(0).getX(), 0.01);
         assertEquals(670, game.getBalls().get(0).getY(), 0.01);
     }
