@@ -31,7 +31,7 @@ Käynnistää ohjelman.
 mvn package
 ```
 
-Luo _BrickBreaker-1.0-SNAPSHOT.jar_ nimisen jar-tiedoston hakemistoon _target_
+Luo _BrickBreaker-1.0-SNAPSHOT.jar_ nimisen jar-tiedoston hakemistoon _target_.
 
 ### Testaus
 
@@ -46,7 +46,7 @@ Suorittaa JUnit testit.
 mvn jacoco:report
 ```
 
-Luo HTML-muotoisen JaCoCo testikattavuusraportin, jota voi tarkastella avaamall tiedoston _target/site/jacoco/index.html_ selaimella.
+Luo HTML-muotoisen JaCoCo testikattavuusraportin, jota voi tarkastella avaamalla tiedoston _target/site/jacoco/index.html_ selaimella.
 
 ### JavaDoc
 
