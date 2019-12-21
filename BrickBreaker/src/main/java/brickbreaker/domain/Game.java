@@ -2,7 +2,6 @@ package brickbreaker.domain;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 import javafx.geometry.Point2D;
 
@@ -33,33 +32,43 @@ public class Game {
      * @param balls list for balls
      * @param bricks list for bricks
      * @param powerups list for powerups
+     * @param powerupService service for powerup spawning
+     * @param levelGenerator service for generating levels
      */
-    public Game(List<Ball> balls, List<Brick> bricks, List<Powerup> powerups) {
+    public Game(List<Ball> balls, List<Brick> bricks, List<Powerup> powerups,
+            PowerupService powerupService, LevelGenerator levelGenerator) {
+
         this.balls = balls;
         this.bricks = bricks;
         this.powerups = powerups;
-        Random random = new Random();
-        powerupService = new PowerupService(random, 8);
-        levelGenerator = new LevelGenerator(13, 8, 98, 30, random);
+        this.powerupService = powerupService;
+        this.levelGenerator = levelGenerator;
         score = 0;
         level = 1;
         lives = 3;
         paddle = new Paddle(PADDLE_WIDTH, PADDLE_HEIGHT);
         this.balls.add(new Ball(BALL_RADIUS, false));
         this.bricks.addAll(levelGenerator.generate());
-        bricksLeft = levelGenerator.breakableBrickCount();
+        bricksLeft = levelGenerator.getBreakableBrickCount();
     }
 
+    // For testing purposes.
     public List<Ball> getBalls() {
         return balls;
     }
 
-    public Paddle getPaddle() {
-        return paddle;
-    }
-
+    // For testing purposes.
     public List<Brick> getBricks() {
         return bricks;
+    }
+
+    // For testing purposes.
+    public List<Powerup> getPowerups() {
+        return powerups;
+    }
+
+    public Paddle getPaddle() {
+        return paddle;
     }
 
     public int getScore() {
@@ -81,7 +90,7 @@ public class Game {
         level++;
         bricks.clear();
         bricks.addAll(levelGenerator.generate());
-        bricksLeft = levelGenerator.breakableBrickCount();
+        bricksLeft = levelGenerator.getBreakableBrickCount();
         resetMovableEntities();
     }
 
@@ -98,29 +107,6 @@ public class Game {
         handlePowerupCollision();
     }
 
-    public void moveBalls(double dt) {
-        List<Ball> toBeRemoved = new ArrayList<>();
-        balls.forEach(ball -> {
-            ball.move(dt);
-            if (!ball.inPlay()) {
-                toBeRemoved.add(ball);
-            }
-        });
-        balls.removeAll(toBeRemoved);
-    }
-
-    public void movePowerups(double dt) {
-        List<Entity> toBeRemoved = new ArrayList<>();
-        powerups.forEach(powerup -> {
-            powerup.move(dt);
-            if (!powerup.inPlay()) {
-                toBeRemoved.add(powerup);
-                powerupService.outOfBounds(powerup.getType());
-            }
-        });
-        powerups.removeAll(toBeRemoved);
-    }
-
     /**
      * Moves the paddle by PADDLE_SPEED. Left if direction is negative, right if
      * positive.
@@ -135,8 +121,31 @@ public class Game {
             paddle.move(PADDLE_SPEED, dt);
         }
     }
+    
+    private void moveBalls(double dt) {
+        List<Ball> toBeRemoved = new ArrayList<>();
+        balls.forEach(ball -> {
+            ball.move(dt);
+            if (!ball.inPlay()) {
+                toBeRemoved.add(ball);
+            }
+        });
+        balls.removeAll(toBeRemoved);
+    }
 
-    public void handlePaddleCollision() {
+    private void movePowerups(double dt) {
+        List<Entity> toBeRemoved = new ArrayList<>();
+        powerups.forEach(powerup -> {
+            powerup.move(dt);
+            if (!powerup.inPlay()) {
+                toBeRemoved.add(powerup);
+                powerupService.outOfBounds(powerup.getType());
+            }
+        });
+        powerups.removeAll(toBeRemoved);
+    }
+
+    private void handlePaddleCollision() {
         balls.forEach(ball -> {
             if (ball.intersects(paddle) && ball.getMovement().getY() > 0) {
                 double xMovement = bounceFromPaddle(ball);
@@ -146,7 +155,7 @@ public class Game {
         });
     }
 
-    public double bounceFromPaddle(Ball ball) {
+    private double bounceFromPaddle(Ball ball) {
         double zoneEnd = paddle.getWidth() / 5;
         double ballX = ball.getX();
         double paddleX = paddle.getX();
@@ -167,7 +176,7 @@ public class Game {
         return xMovement;
     }
 
-    public void handleBrickCollision() {
+    private void handleBrickCollision() {
         List<Entity> toBeRemoved = new ArrayList<>();
         for (Brick brick : bricks) {
             for (Ball ball : balls) {
@@ -185,7 +194,7 @@ public class Game {
         bricks.removeAll(toBeRemoved);
     }
 
-    public boolean brickHit(Brick brick, Ball ball) {
+    private boolean brickHit(Brick brick, Ball ball) {
         if (!brick.isBreakable() && !ball.isUnstoppable()) {
             return false;
         }
@@ -207,12 +216,12 @@ public class Game {
         return false;
     }
 
-    public void bounceFromBrick(Brick brick, Ball ball) {
+    private void bounceFromBrick(Brick brick, Ball ball) {
         Point2D movement = ball.getMovement();
 
         if (ball.getX() < brick.getX() && movement.getX() > 0) {
             ball.setMovement(new Point2D(-movement.getX(), movement.getY()));
-        } else if (ball.getX() - ball.getRadius() > brick.getX() + brick.getWidth()
+        } else if (ball.getX() - ball.getRadius() >= brick.getX() + brick.getWidth()
                 && movement.getX() < 0) {
             ball.setMovement(new Point2D(-movement.getX(), movement.getY()));
         } else if (ball.getY() > brick.getY() && movement.getY() < 0) {
@@ -222,7 +231,7 @@ public class Game {
         }
     }
 
-    public void handlePowerupCollision() {
+    private void handlePowerupCollision() {
         List<Entity> toBeRemoved = new ArrayList<>();
         powerups.forEach(powerup -> {
             if (powerup.intersects(paddle)) {
@@ -234,7 +243,7 @@ public class Game {
         powerups.removeAll(toBeRemoved);
     }
 
-    public void activatePower(PowerupType type) {
+    private void activatePower(PowerupType type) {
         powerupService.setActive(type);
         switch (type) {
             case EXTRA:
@@ -252,7 +261,7 @@ public class Game {
         }
     }
 
-    public void extraBalls() {
+    private void extraBalls() {
         boolean unstoppable = powerupService.isActive(PowerupType.SUPER);
         double radius = unstoppable ? SUPER_BALL_RADIUS : BALL_RADIUS;
         balls.add(extraBall(-BALL_STARTING_SPEED, radius, unstoppable));
@@ -269,12 +278,12 @@ public class Game {
         return ball;
     }
 
-    public void widePaddle() {
+    private void widePaddle() {
         paddle.setWidth(WIDE_PADDLE_WIDTH);
         paddle.move(-50, 1);
     }
 
-    public void superBall() {
+    private void superBall() {
         balls.forEach(ball -> {
             ball.setUnstoppable(true);
             ball.setRadius(SUPER_BALL_RADIUS);

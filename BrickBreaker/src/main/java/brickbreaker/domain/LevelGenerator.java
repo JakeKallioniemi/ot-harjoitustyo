@@ -56,7 +56,7 @@ public class LevelGenerator {
         return bricks;
     }
 
-    public int breakableBrickCount() {
+    public int getBreakableBrickCount() {
         return breakableBricks;
     }
 

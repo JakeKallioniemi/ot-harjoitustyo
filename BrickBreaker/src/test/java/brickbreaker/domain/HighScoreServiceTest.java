@@ -70,4 +70,22 @@ public class HighScoreServiceTest {
         assertEquals("ABC", entry.getName());
         assertEquals(3500, entry.getScore());
     }
+
+    @Test
+    public void nevestScoreIndexDefaultValueWhenNoNewScoreAdded() {
+        assertEquals(-1, scoreService.getNewestScoreIndex());
+    }
+
+    @Test
+    public void newestScoreIndexCorrect() {
+        scoreService.addScore("ABC", 1001);
+        assertEquals(9, scoreService.getNewestScoreIndex());
+    }
+
+    @Test
+    public void newestScoreIndexResets() {
+        scoreService.addScore("ABC", 1001);
+        scoreService.getNewestScoreIndex();
+        assertEquals(-1, scoreService.getNewestScoreIndex());
+    }
 }

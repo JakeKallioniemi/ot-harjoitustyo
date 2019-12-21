@@ -2,6 +2,7 @@ package brickbreaker.domain;
 
 import brickbreaker.domain.mocks.MockRandom;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import org.junit.Before;
@@ -29,16 +30,14 @@ public class PowerupServiceTest {
 
     @Test
     public void powerupReturnedWhenRollSuccesful() {
-        values.add(0);
-        values.add(1);
+        values.addAll(Arrays.asList(0, 1));
         Powerup powerup = service.roll(0, 0);
         assertNotNull(powerup);
     }
 
     @Test
     public void returnedPowerupCorrectProperties() {
-        values.add(0);
-        values.add(1);
+        values.addAll(Arrays.asList(0, 1));
         Powerup powerup = service.roll(50, 35);
         assertEquals(30, powerup.getX(), 0.01);
         assertEquals(35, powerup.getY(), 0.01);
@@ -59,10 +58,7 @@ public class PowerupServiceTest {
 
     @Test
     public void powerupOnScreenDoesNotDrop() {
-        values.add(0);
-        values.add(2);
-        values.add(0);
-        values.add(2);
+        values.addAll(Arrays.asList(0, 2, 0 ,2));
         service.roll(0, 0);
         Powerup powerup = service.roll(0, 0);
         assertNull(powerup);
@@ -71,8 +67,7 @@ public class PowerupServiceTest {
     @Test
     public void activePowerupDoesNotDrop() {
         service.setActive(PowerupType.WIDE);
-        values.add(0);
-        values.add(1);
+        values.addAll(Arrays.asList(0, 1));
         Powerup powerup = service.roll(0, 0);
         assertNull(powerup);
     }
