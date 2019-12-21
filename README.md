@@ -1,8 +1,6 @@
 # BrickBreaker-peli
 
-Yksinkertainen Arkanoid-tyylinen peli satunnaisesti generoitavilla tasoilla.  
-  
-**HUOM!** Peli on vielä aika buginen ja pallo voi esimerkiksi pomppia oudosti tai jäädä seiniin kiinni varsinkin jos fps on alhainen.
+Yksinkertainen Arkanoid-tyylinen peli satunnaisesti generoitavilla tasoilla.
 
 ## Dokumentaatio
 [Käyttöohje](https://github.com/JakeKallioniemi/ot-harjoitustyo/blob/master/dokumentaatio/kayttoohje.md)  
@@ -19,55 +17,49 @@ Yksinkertainen Arkanoid-tyylinen peli satunnaisesti generoitavilla tasoilla.
 
 **HUOM!** Kaikki listatut komennot tulee suorittaa BrickBreaker-kansion sisällä eikä juuri kansiossa.
 
-### Ohjelman käynnistys
-
-Ohjelma suoritetaan komennolla
+### Käynnistys
 
 ```
 mvn compile exec:java -Dexec.mainClass=brickbreaker.BrickBreaker
 ```
-### Suoritettavan jarin generointi
 
-Komento
+Käynnistää ohjelman.
+
+### Suoritettavan jar-tiedoston luonti
 
 ```
 mvn package
 ```
 
-generoi hakemistoon _target_ suoritettavan jar-tiedoston _BrickBreaker-1.0-SNAPSHOT.jar_
+Luo _BrickBreaker-1.0-SNAPSHOT.jar_ nimisen jar-tiedoston hakemistoon _target_
 
 ### Testaus
-
-Testit suoritetaan komennolla
 
 ```
 mvn test
 ```
 
-Testikattavuusraportti luodaan komennolla
+Suorittaa JUnit testit.
+
 
 ```
 mvn jacoco:report
 ```
 
-Kattavuusraporttia voi tarkastella avaamalla selaimella tiedoston _target/site/jacoco/index.html_
+Luo HTML-muotoisen JaCoCo testikattavuusraportin, jota voi tarkastella avaamall tiedoston _target/site/jacoco/index.html_ selaimella.
 
 ### JavaDoc
-
-JavaDoc generoidaan komennolla
 
 ```
 mvn javadoc:javadoc
 ```
 
-JavaDocia voi tarkastella avaamalla selaimella tiedoston _target/site/apidocs/index.html_
+Luo JavaDocin, jota voi tarkastella  avaamalla tiedoston _target/site/apidocs/index.html_ selaimella.
 
 ### Checkstyle
-
-Tiedostoon [checkstyle.xml](https://github.com/JakeKallioniemi/ot-harjoitustyo/blob/master/BrickBreaker/checkstyle.xml) määritellyt tarkistukset suoritetaan komennolla
 
 ```
  mvn jxr:jxr checkstyle:checkstyle
 ```
 
-Mahdolliset virheilmoitukset selviävät avaamalla selaimella tiedoston _target/site/checkstyle.html_
+Suorittaa tiedostoon [checkstyle.xml](https://github.com/JakeKallioniemi/ot-harjoitustyo/blob/master/BrickBreaker/checkstyle.xml) määritelly tarkastukset. Tuloksia voi tarkastella avaamalla tiedoston _target/site/checkstyle.html_ selaimella.
