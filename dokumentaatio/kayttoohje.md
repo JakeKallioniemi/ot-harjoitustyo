@@ -2,6 +2,8 @@
 
 Aloita lataamalla [BrickBreaker.jar](https://github.com/JakeKallioniemi/ot-harjoitustyo/releases/tag/loppupalautus).
 
+**HUOM!** Jostain syystä laduttu jar ei näytä toimivan kaikissa ympäristöissä (vaikka kikka Main luokan kanssa on käytössä). Itse generoitu jar näyttää kuitenkin aina toimivan.
+
 ## Käynnistäminen
 
 ```
