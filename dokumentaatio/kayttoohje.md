@@ -30,7 +30,7 @@ Pelin tavoitteena on kerätä mahdollisimman paljon pisteitä pitämällä pallo
 
 ## Pelin säännöt
 
-Pelin alussa elämiä on kolme, kun viimeinen pallo osuu ruudun alalaitaan menetät elämän. Peli loppuu kun elämät loppuvat.
+Pelin alussa elämiä on kolme, kun viimeinen pallo osuu ruudun alalaitaan, menetät elämän. Peli loppuu kun elämät loppuvat.
 
 Jos pelin lopussa pisteet yltävät kymmenen parhaan joukkoon voit antaa nimimerkin ja pisteesi tallennetaan.
 
