@@ -22,7 +22,7 @@ Yksinkertainen Arkanoid-tyylinen peli satunnaisesti generoitavilla tasoilla.
 ### Käynnistys
 
 ```
-mvn compile exec:java -Dexec.mainClass=brickbreaker.BrickBreaker
+mvn compile exec:java -Dexec.mainClass=brickbreaker.Main
 ```
 
 Käynnistää ohjelman.
