@@ -41,8 +41,9 @@ Kun kaikki tiilet on tuhottu, pelaaja siirtyy seuraavalle tasolle. Jos pallo osu
 - Powerup ei voi ilmestyä, jos samanlainen on jo ruudulla.
 - Violetti ja vaaleanpunainen powerup eivät ilmesty, jos sellainen on jo aktiivisena.
 - Kun kaikki tiilet, lukuunottamatta harmaita tiiliä, on tuhottu pelaaja siirtyy seuraavalle tasolle.
-- Kun pallo osuu ruudun alalaitaan, pelaaja menettää elämän.
+- Kun viimeinen ruudulla oleva pallo osuu ruudun alalaitaan, pelaaja menettää elämän.
 	- Kun elämiä on nolla peli loppuu.
+	- Alkuruutu näytetään uudestaan ja pelaaja voi jatkaa painamalla enteriä.
 - Pelin lopussa pelaajalle näytetään Game Over-ruutu, jossa kerrotaan saatu pistemäärä.
 - Jos pisteet eivät riittäneet parhaan kymmenen joukkoon, minkä tahansa näppäimen painaminen siirtyy päävalikkoon.
 - Jos pisteet riittävät kymmenen parhaan joukkoon, minkä tahansa näppäimen painaminen siirtyy uuteen näkymään, jossa siitä kerrotaan pelaajalle ja pelaaja voi antaa kolmikirjaimisen nimimerkin nuolinäppäimillä.
