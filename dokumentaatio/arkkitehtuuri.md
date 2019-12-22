@@ -48,3 +48,27 @@ Ohjelman sovelluslogiikka kuvaava luokkakaavio:
 <img src="https://github.com/JakeKallioniemi/ot-harjoitustyo/blob/master/dokumentaatio/kuvat/luokkarakenne.png" width="700">
 
 ## Tietojen tallennus
+
+Sovellus tallentaa parhaat pisteet _scores.txt_ tiedostoon. Tallenus tehdään [FileHighScoreDao](https://github.com/JakeKallioniemi/ot-harjoitustyo/blob/master/BrickBreaker/src/main/java/brickbreaker/dao/FileHighScoreDao.java)-luokalla, joka toteuttaa [HighScoreDao](https://github.com/JakeKallioniemi/ot-harjoitustyo/blob/master/BrickBreaker/src/main/java/brickbreaker/dao/HighScoreDao.java)-rajapinnan. Tiedostoon tallennus tehdään aina rajapinnan kautta eli toteutuksen voisi vaihtaa esimerkiksi tietokantaan.
+
+### Tiedosto
+
+Tiedostossa pisteet on kirjoitettu riveittäin. Nimimerkki on erotettu pisteistä tabilla. Jos tiedostoa ei ole olemassa tai sen muoto on väärä (rivejä liian vähän, ei nimimerkkiä tai pisteitä, pisteet eivät ole kokonaisluku), luodaan uusi tiedosto oletusarvoilla. Käyttöliittymän kautta syötettynä kaikki nimimerkit ovat kolme merkkisiä, mutta nimimerkin pituutta tiedostoa luettaessa ei valvota.
+
+## Esimerkki toiminnallisuuksia
+
+### Näkymän vaihto
+
+Kun halutaan vaihtaa näkymää kutsutaan ViewManagerin changeView-metodia. ChangeView ottaa parametrina merkkijonon, joka kuvaa haluttua näkymää ja listan argumentteja tai null, jos argumentteja ei tarvita. Näkymä etsitään merkkijonon perusteella hajautustaulusta, jonka jälkeen kutsutaan uuden näkymän metodia enter, joka luo näkymää vastaavan Scene-olion ja tekee muun tarvittavan alustuksen. Mahdolliset argumentit annetaan myös enter-metodin kautta. Kun alustus on tehty, enter palauttaa Scene-olion ViewManagerille, joka asettaa sen Stage-olioon ja näkymän vaihto on valmis.
+
+### Mailan liikuttaminen
+
+Kun ollaan pelinäkymässä (GameView), painetut näppäimet tarkistetaan joka päivityskerralla. Jos mukana on nuolinäppäin vasemmalle tai oikealle kutsutaan Gamen metodia movePaddle, jolle annetaan luku joka kertoo liikkeen suunnan (negatiivinen vasemmalle, positiivinen oikealle), sekä dt eli delta time, joka kertoo kuluneen ajan edellisestä päivityksestä sekunteina. Game kutsuu edelleen Paddle-luokan metodia move, jolle annetaan mailan siirtymä vaakatasossa, sekä dt. Lopulta move siirtää mailaa annetulla määrällä, dt:llä kerrottuna. Näin ollen liikkeen määrä pysyy samana päivitynopeudesta riippumatta. Tarvittaessa move siirtää mailaa vielä uudelleen, jos maila joutui pelikentän ulkopuolelle.
+
+### Pisteiden tallennus
+
+Kun käyttäjä on antanut nimimerkin, kutsutaan HighScoreServicen metodia addScore, jolle annetaan nimimerkki ja pisteet. HighScoreService luo HighScoreEntry olion, joka kuvaa yhtä riviä highscore-listassa. Huonoimmat pisteet poistetaan ja uusimman pisteiden indeksi listassa tallennetaa. Tämän jälkeen HighScoreService kutsuu HighScoreDao rajapinnan kautta FileHighScoreDaon metodia add, joka ylikirjoittaa koko tiedoston uudelleen. Lopuksi näkymä vaihdetaan pisteiden listaukseen (ScoresView), joka kutsuu HighScoreServicen metodia getNewestScoreIndex, jonka avulla se korostaa juuri lisätyt pisteet.
+
+## Ohjelman rakenteeseen liittyvät ongelmat
+
+Game hallitsee suurta osaa ohjelman logiikasta ja sen metodien toiminta riippuu hyvin paljon pelin sen hetkisestä tilasta, jonka takia sen testaaminen on aika hankalaa. 
