@@ -11,4 +11,5 @@
 	<suppress files="brickbreaker.ui.GameOverView.java" checks="[a-zA-Z0-9]*"/>
 	<suppress files="brickbreaker.ui.EnterScoreView.java" checks="[a-zA-Z0-9]*"/>
 	<suppress files="brickbreaker.BrickBreaker.java" checks="[a-zA-Z0-9]*"/>
+	<suppress files="brickbreaker.Main.java" checks="[a-zA-Z0-9]*"/>
 </suppressions>

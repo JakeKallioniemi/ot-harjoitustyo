@@ -65,6 +65,7 @@
 					<excludes>
 						<exclude>brickbreaker/ui/*</exclude>
 						<exclude>brickbreaker/BrickBreaker.class</exclude>
+						<exclude>brickbreaker/Main.class</exclude>
 					</excludes>
 				</configuration>   
                 <executions>
@@ -89,7 +90,7 @@
 						<configuration>
 							<transformers>
 								<transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-									<mainClass>brickbreaker.BrickBreaker</mainClass>
+									<mainClass>brickbreaker.Main</mainClass>
 								</transformer>
 							</transformers>
 						</configuration>
