@@ -64,4 +64,4 @@ Luo JavaDocin, jota voi tarkastella  avaamalla tiedoston _target/site/apidocs/in
  mvn jxr:jxr checkstyle:checkstyle
 ```
 
-Suorittaa tiedostoon [checkstyle.xml](https://github.com/JakeKallioniemi/ot-harjoitustyo/blob/master/BrickBreaker/checkstyle.xml) määritelly tarkastukset. Tuloksia voi tarkastella avaamalla tiedoston _target/site/checkstyle.html_ selaimella.
+Suorittaa tiedostoon [checkstyle.xml](https://github.com/JakeKallioniemi/ot-harjoitustyo/blob/master/BrickBreaker/checkstyle.xml) määritellyt tarkastukset. Tuloksia voi tarkastella avaamalla tiedoston _target/site/checkstyle.html_ selaimella.
