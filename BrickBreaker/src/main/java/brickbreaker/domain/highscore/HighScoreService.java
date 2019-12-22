@@ -1,4 +1,4 @@
-package brickbreaker.domain;
+package brickbreaker.domain.highscore;
 
 import brickbreaker.dao.HighScoreDao;
 import java.io.IOException;

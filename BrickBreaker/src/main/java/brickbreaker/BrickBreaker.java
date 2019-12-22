@@ -2,7 +2,7 @@ package brickbreaker;
 
 import brickbreaker.dao.FileHighScoreDao;
 import brickbreaker.dao.HighScoreDao;
-import brickbreaker.domain.HighScoreService;
+import brickbreaker.domain.highscore.HighScoreService;
 import brickbreaker.ui.EnterScoreView;
 import brickbreaker.ui.GameOverView;
 import brickbreaker.ui.GameView;

@@ -1,4 +1,4 @@
-package brickbreaker.domain;
+package brickbreaker.domain.powerup;
 
 import java.util.Random;
 import javafx.geometry.Point2D;
@@ -33,7 +33,7 @@ public class PowerupService {
      * @param x the x-coordinate of spawn point
      * @param y the y-coordinate of spawn point
      * @return the powerup if roll was successful, otherwise null
-     * @see brickbreaker.domain.Powerup
+     * @see brickbreaker.domain.powerup.Powerup
      */
     public Powerup roll(double x, double y) {
         if (random.nextInt(dropChance) != 0) {
@@ -65,7 +65,7 @@ public class PowerupService {
      * Marks powerup type as active if it is limited.
      *
      * @param type the type to set active
-     * @see brickbreaker.domain.PowerupType
+     * @see brickbreaker.domain.powerup.PowerupType
      */
     public void setActive(PowerupType type) {
         outOfBounds(type);
@@ -76,7 +76,7 @@ public class PowerupService {
      * Marks powerup type as not being on screen anymore.
      *
      * @param type the type of powerup
-     * @see brickbreaker.domain.PowerupType
+     * @see brickbreaker.domain.powerup.PowerupType
      */
     public void outOfBounds(PowerupType type) {
         onScreen[type.ordinal()] = false;

@@ -1,5 +1,7 @@
 package brickbreaker.domain;
 
+import brickbreaker.domain.highscore.HighScoreService;
+import brickbreaker.domain.highscore.HighScoreEntry;
 import brickbreaker.domain.mocks.MockHighScoreDao;
 import brickbreaker.dao.HighScoreDao;
 import java.util.List;

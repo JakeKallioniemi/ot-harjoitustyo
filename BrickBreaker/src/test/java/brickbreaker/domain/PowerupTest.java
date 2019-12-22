@@ -1,5 +1,7 @@
 package brickbreaker.domain;
 
+import brickbreaker.domain.powerup.PowerupType;
+import brickbreaker.domain.powerup.Powerup;
 import javafx.geometry.Point2D;
 import javafx.scene.shape.Rectangle;
 import org.junit.Before;

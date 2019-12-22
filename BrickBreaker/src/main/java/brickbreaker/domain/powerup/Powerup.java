@@ -1,5 +1,6 @@
-package brickbreaker.domain;
+package brickbreaker.domain.powerup;
 
+import brickbreaker.domain.Entity;
 import static brickbreaker.BrickBreaker.GAME_HEIGHT;
 import javafx.geometry.Point2D;
 import javafx.scene.shape.Rectangle;

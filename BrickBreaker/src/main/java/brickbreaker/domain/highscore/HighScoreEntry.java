@@ -1,4 +1,4 @@
-package brickbreaker.domain;
+package brickbreaker.domain.highscore;
 
 public class HighScoreEntry implements Comparable<HighScoreEntry> {
 

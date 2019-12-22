@@ -1,5 +1,8 @@
 package brickbreaker.domain;
 
+import brickbreaker.domain.powerup.PowerupType;
+import brickbreaker.domain.powerup.Powerup;
+import brickbreaker.domain.powerup.PowerupService;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;

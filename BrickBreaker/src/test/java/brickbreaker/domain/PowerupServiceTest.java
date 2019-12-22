@@ -1,5 +1,8 @@
 package brickbreaker.domain;
 
+import brickbreaker.domain.powerup.PowerupType;
+import brickbreaker.domain.powerup.PowerupService;
+import brickbreaker.domain.powerup.Powerup;
 import brickbreaker.domain.mocks.MockRandom;
 import java.util.ArrayList;
 import java.util.Arrays;

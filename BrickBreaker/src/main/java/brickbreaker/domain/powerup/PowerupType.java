@@ -1,4 +1,4 @@
-package brickbreaker.domain;
+package brickbreaker.domain.powerup;
 
 public enum PowerupType {
     EXTRA(false),

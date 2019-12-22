@@ -1,7 +1,7 @@
 package brickbreaker.domain.mocks;
 
 import brickbreaker.dao.HighScoreDao;
-import brickbreaker.domain.HighScoreEntry;
+import brickbreaker.domain.highscore.HighScoreEntry;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;

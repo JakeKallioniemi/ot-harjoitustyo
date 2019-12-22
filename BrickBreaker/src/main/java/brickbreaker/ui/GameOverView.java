@@ -2,7 +2,7 @@ package brickbreaker.ui;
 
 import static brickbreaker.BrickBreaker.GAME_HEIGHT;
 import static brickbreaker.BrickBreaker.GAME_WIDTH;
-import brickbreaker.domain.HighScoreService;
+import brickbreaker.domain.highscore.HighScoreService;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.geometry.Insets;

@@ -1,6 +1,6 @@
 package brickbreaker.dao;
 
-import brickbreaker.domain.HighScoreEntry;
+import brickbreaker.domain.highscore.HighScoreEntry;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
