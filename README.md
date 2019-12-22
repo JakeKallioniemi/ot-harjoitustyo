@@ -5,17 +5,19 @@ Yksinkertainen Arkanoid-tyylinen peli satunnaisesti generoitavilla tasoilla.
 ## Dokumentaatio
 [Käyttöohje](https://github.com/JakeKallioniemi/ot-harjoitustyo/blob/master/dokumentaatio/kayttoohje.md)  
 [Vaatimusmäärittely](https://github.com/JakeKallioniemi/ot-harjoitustyo/blob/master/dokumentaatio/vaatimusmaarittely.md)  
-[Työaikakirjanpito](https://github.com/JakeKallioniemi/ot-harjoitustyo/blob/master/dokumentaatio/tyoaikakirjanpito.md)  
 [Arkkitehtuurikuvaus](https://github.com/JakeKallioniemi/ot-harjoitustyo/blob/master/dokumentaatio/arkkitehtuuri.md)  
+[Testausdokumentti](https://github.com/JakeKallioniemi/ot-harjoitustyo/blob/master/dokumentaatio/testaus.md)
+[Työaikakirjanpito](https://github.com/JakeKallioniemi/ot-harjoitustyo/blob/master/dokumentaatio/tyoaikakirjanpito.md)  
 
 ## Releaset
 
 [Viikko 5](https://github.com/JakeKallioniemi/ot-harjoitustyo/releases/tag/viikko5)  
 [Viikko 6](https://github.com/JakeKallioniemi/ot-harjoitustyo/releases/tag/viikko6)
+[Loppupalautus](https://github.com/JakeKallioniemi/ot-harjoitustyo/releases/tag/loppupalautus)
 
 ## Komentorivitoiminnot
 
-**HUOM!** Kaikki listatut komennot tulee suorittaa BrickBreaker-kansion sisällä eikä juuri kansiossa.
+**HUOM!** Kaikki listatut komennot tulee suorittaa BrickBreaker-kansion sisällä eikä juurikansiossa.
 
 ### Käynnistys
 
