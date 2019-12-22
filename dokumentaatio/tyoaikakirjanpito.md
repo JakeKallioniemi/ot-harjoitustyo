@@ -13,4 +13,6 @@
 | 10.12. | 6    | testien korjaus ja lisää testejä, javadoc, arkkitehtuurikuvaus, käyttöohjeiden parantelu |
 | 19.12. | 2    | tasojen luonnin aloitus ja muutoksia mailaan |
 | 20.12. | 2    | tasojen luonnin viimeistely, uuden highscoren korostus ja lisäää dokumentointia |
-| yht.   | 45   | | 
+| 21.12. | 4    | pakkausrakenteen muutos, pientä viilausta ja dokumentointia |
+| 22.12. | 5    | testausraportti, käyttöohje, vaatimusmäärittelyn päivitys ja pieniä korjauksia |
+| yht.   | 54   | | 
