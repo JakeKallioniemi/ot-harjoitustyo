@@ -55,21 +55,6 @@ public class Game {
         bricksLeft = levelGenerator.getBreakableBrickCount();
     }
 
-    // For testing purposes.
-    public List<Ball> getBalls() {
-        return balls;
-    }
-
-    // For testing purposes.
-    public List<Brick> getBricks() {
-        return bricks;
-    }
-
-    // For testing purposes.
-    public List<Powerup> getPowerups() {
-        return powerups;
-    }
-
     public Paddle getPaddle() {
         return paddle;
     }
@@ -124,7 +109,7 @@ public class Game {
             paddle.move(PADDLE_SPEED, dt);
         }
     }
-    
+
     private void moveBalls(double dt) {
         List<Ball> toBeRemoved = new ArrayList<>();
         balls.forEach(ball -> {
@@ -207,16 +192,17 @@ public class Game {
                 bricksLeft--;
             }
             score += 50 + brick.getType() * 10;
-            Powerup powerup = powerupService.roll(
-                    brick.getX() + brick.getWidth() / 2,
-                    brick.getY()
-            );
-            if (powerup != null) {
-                powerups.add(powerup);
-            }
+            rollForPowerup(brick.getX() + brick.getWidth() / 2, brick.getY());
             return true;
         }
         return false;
+    }
+
+    private void rollForPowerup(double x, double y) {
+        Powerup powerup = powerupService.roll(x, y);
+        if (powerup != null) {
+            powerups.add(powerup);
+        }
     }
 
     private void bounceFromBrick(Brick brick, Ball ball) {

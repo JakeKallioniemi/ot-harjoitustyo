@@ -16,8 +16,8 @@ public class HighScoreService {
     /**
      * Creates a new HighScoreService that uses a HighScoreDao to save and fetch
      * high scores. The amount of scores kept is decided by scoreCount. If
-     * scores don't exists when HighScoreService is created. A list of
-     * placeholder scores will be made.
+     * scores don't exist or they follow the wrong format, a list of placeholder
+     * scores will be made.
      *
      * @param scoreDao the HighScoreDao used to save and fetch scores
      * @param scoreCount the maximum amount of scores saved
@@ -32,7 +32,7 @@ public class HighScoreService {
             if (scores.size() < scoreCount) {
                 initScores();
             }
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             initScores();
         }
     }
@@ -40,11 +40,11 @@ public class HighScoreService {
     public List<HighScoreEntry> getScores() {
         return scores;
     }
-    
+
     /**
-     * Returns the index of the most recent score and then resets
-     * it to default value.
-     * 
+     * Returns the index of the most recent score and then resets it to default
+     * value.
+     *
      * @return index of the most recent score or -1 if no new score
      */
     public int getNewestScoreIndex() {
@@ -66,7 +66,7 @@ public class HighScoreService {
     /**
      * Adds score to list of high scores. Removes the lowest score to keep
      * length constant. Saves the result with the HighScoreDao object provided
-     * in constructor.
+     * in constructor. Fails silently if score can't be added.
      *
      * @param name the name associated with the score
      * @param score the score

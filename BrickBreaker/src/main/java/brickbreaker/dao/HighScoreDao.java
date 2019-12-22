@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface HighScoreDao {
 
-    public List<HighScoreEntry> list() throws IOException;
+    public List<HighScoreEntry> list() throws Exception;
     public void add(List<HighScoreEntry> scores) throws IOException;
 }

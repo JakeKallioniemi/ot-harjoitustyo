@@ -24,7 +24,7 @@ public class FileHighScoreDao implements HighScoreDao {
      * @throws IOException
      */
     @Override
-    public List<HighScoreEntry> list() throws IOException {
+    public List<HighScoreEntry> list() throws Exception {
         List<HighScoreEntry> scores = new ArrayList<>();
         Scanner scanner = new Scanner(new File(fileName));
         scanner.useDelimiter("\n");
